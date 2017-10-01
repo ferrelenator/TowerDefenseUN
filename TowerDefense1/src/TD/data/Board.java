@@ -7,14 +7,12 @@ public class Board{
 
     
     public Board() {
-
-         
-        char value = 'x';
+        
+   
         board = new Square[10][10];
-
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board.length; col++) {
-                Square square = new Square(row, col,value);
+                Square square = new Square(row, col,'X');
                 board[row][col] = square;
             }
         }
@@ -22,34 +20,38 @@ public class Board{
 
     }
     
+    public Board(int[][] newMap){
     
-    public void road(){
-         
-        for (int row = 2; row < 4; row++) {
-            for (int col = 0; col < 5; col++) {
-                Square square = new Square(row, col,'-');
-                board[row][col] = square;
+                 board = new Square[10][10];
+                 char value=' ';
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                switch(newMap[i][j]){
+                    case 0:
+                value='X';
+                break;
+                    case 1:
+                value=' ';
+                break;
+                case 2:
+                value='O';
+                break;
+                case 3:
+                value='#';
+                break;
+                }
+                Square square = new Square(i, j,value);
+                board[i][j] = square;
             }
         }
-        
-        for (int row = 4; row < 8; row++) {
-            for (int col = 3; col < 5; col++) {
-                Square square = new Square(row, col,'-');
-                board[row][col] = square;
-            }
-        }
-           
-        for (int row = 6; row <8 ; row++) {
-            for (int col = 5; col < 10; col++) {
-                Square square = new Square(row, col,'-');
-               board[row][col] = square;
-            }
-        }  
     }
     
-    public void paint(int row,int col,char value){
+ 
+    
+    public void paint(float row,float col,char value){
                 Square square = new Square(row, col,value);
-                board[row][col] = square;
+                board[(int)row][(int)col] = square;
         
     }
 
@@ -58,7 +60,7 @@ public class Board{
     }
 
     public void updateSquare(Square square) {
-        board[square.getRow()][square.getCol()] = square;
+        board[(int) square.getRow()][(int) square.getCol()] = square;
     }
 
 @Override

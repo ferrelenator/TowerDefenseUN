@@ -1,4 +1,7 @@
-
+/*
+TODO
+-Mejorar la presentanción del UI
+*/
 package TD.ui;
 
 import java.util.Scanner;

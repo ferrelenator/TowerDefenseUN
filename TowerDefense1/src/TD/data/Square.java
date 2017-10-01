@@ -2,43 +2,46 @@ package TD.data;
 
 public class Square {
     
-    private int row;
-    private int col;
+    private float row;
+    private float col;
     private char value;
 
-    public Square(int row, int col, char value) {
+    public Square(float row, float col, char value) {
         this.row = row;
         this.col = row;
         this.value = value;
     }
     
 
-    public int getCol() {
-        return col;
+
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.getValue());
     }
 
-    public void setCol(int col) {
-        this.col = col;
-    }
-
-    public int getRow() {
+    public float getRow() {
         return row;
     }
 
-    public void setRow(int row) {
+
+    public void setRow(float row) {
         this.row = row;
     }
 
+
+    public float getCol() {
+        return col;
+    }
+
+    public void setCol(float col) {
+        this.col = col;
+    }
     public char getValue() {
         return value;
     }
 
     public void setValue(char value) {
         this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(this.getValue());
     }
 }

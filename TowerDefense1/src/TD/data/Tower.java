@@ -2,15 +2,17 @@
 package TD.data;
 
 /**
- *
- * @author Fenryr
+ *TODO
+- Crear proyectiles
+- Disparar proyectiles 
+- Creacion de torres por consola
  */
 public class Tower {
     
-    private int x,y;
+    private float x,y;
     
     
-    public Tower(int x, int y){
+    public Tower(float x, float y){
         this.x=x;
         this.y=y;
         
