@@ -22,7 +22,7 @@ public class Board{
     
     public Board(int[][] newMap){
     
-                 board = new Square[10][10];
+                 board = new Square[newMap.length][newMap.length];
                  char value=' ';
 
         for (int i = 0; i < board.length; i++) {
