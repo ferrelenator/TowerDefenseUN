@@ -20,6 +20,6 @@ public class Tower {
     
        
     public void drawn(Board board){
-    board.paint(x,y,'O');
+        board.paint(x,y,'O');
     }
 }

@@ -8,7 +8,8 @@ package TD.data;
 public class Enemy {
     
     private float x,y,speed;
-    private float counter=0;
+    private final char texture='#';
+
     
     public Enemy(float x, float y,float speed){
         this.x=x;
@@ -18,13 +19,15 @@ public class Enemy {
     }
     
     public void drawn(Board board){
-    board.paint(x,y,'#');
+        board.paint(x,y,texture);
     }
     
-
-    
-    
-    
+    public void update(float x,float y){
+        this.x = x;
+        this.y = y;
+        
+        
+    }
     
     
     

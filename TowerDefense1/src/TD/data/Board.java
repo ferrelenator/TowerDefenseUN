@@ -4,11 +4,11 @@ package TD.data;
 public class Board{
     
     private Square[][] board;
-
+    private int length;
     
     public Board() {
         
-   
+        length=10;
         board = new Square[10][10];
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board.length; col++) {
@@ -21,7 +21,7 @@ public class Board{
     }
     
     public Board(int[][] newMap){
-    
+                length=newMap.length;
                  board = new Square[newMap.length][newMap.length];
                  char value=' ';
 
@@ -77,6 +77,22 @@ public class Board{
         }
         return printBoard;
     }
+
+    /**
+     * @return the length
+     */
+    public int getLength() {
+        return length;
+    }
+
+    /**
+     * @param length the length to set
+     */
+    public void setLength(int length) {
+        this.length = length;
+    }
+    
+    
     
 }
 

@@ -1,4 +1,4 @@
-package TD.business;
+/*package TD.business;
 
 import TD.data.*;
 import TD.ui.UI;
@@ -54,12 +54,13 @@ public class Timer implements Runnable {
 
     
 
-    /**
-     * @return the counter
-     */
+    
+    //@return the counter
+     
     public int getCounter() {
         return counter;
     }
     
     
 }
+/*
