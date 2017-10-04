@@ -9,6 +9,7 @@ public class Enemy {
     
     private float x,y,speed;
     private final char texture='#';
+    
 
     
     public Enemy(float x, float y,float speed){

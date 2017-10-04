@@ -22,39 +22,11 @@ public class Boot  {
     private static Wave wave;
     
     
-    public static void main(String[] args) {
-        
-
-
-        
-        startGame();
-        
+    public static void main(String[] args) {  
+        UI.MenuDevelop();
     }
 
-    private static void startGame() {
-        
-        int[][] map ={
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {1,1,1,1,1,1,1,1,1,1},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0,0},
-            
-        };
-    
-    
-    board = new Board(map);
-    tower = new Tower(1,1);
-    wave= new Wave();
-    tower.drawn(board);
-    UI.printWelcome();
-    
-    wave.update(board);
+}
    
    // Enemy enemy = new Enemy (4,0,1);
    // enemy.drawn(board);
@@ -71,18 +43,18 @@ public class Boot  {
       //      UI.printBoard(board);
       //  }
         
-    }
+    
     
     
  
 
     
 
-    }
+
 
 
 
        
     
-}
+
 

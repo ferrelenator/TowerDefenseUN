@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TD.data;
 
 import TD.ui.UI;
 
 
-/**
- *
- * @author ferrelenator
- */
 public class Wave {
     
     private int numberOfEnemies;
@@ -45,4 +36,5 @@ public class Wave {
         a++;
             }
     
+        }
 }
