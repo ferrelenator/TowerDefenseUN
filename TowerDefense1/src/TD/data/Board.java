@@ -28,10 +28,10 @@ public class Board{
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
                 switch(newMap[i][j]){
-                    case 0:
+                case 0:
                 value='X';
                 break;
-                    case 1:
+                case 1:
                 value=' ';
                 break;
                 case 2:
@@ -47,7 +47,8 @@ public class Board{
         }
     }
     
- 
+
+    
     
     public void paint(float row,float col,char value){
                 Square square = new Square(row, col,value);

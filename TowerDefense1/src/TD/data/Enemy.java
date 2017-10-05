@@ -7,6 +7,7 @@ package TD.data;
 
 public class Enemy {
     
+    private int healt;
     private float x,y,speed;
     private final char texture='#';
     
@@ -16,18 +17,24 @@ public class Enemy {
         this.x=x;
         this.y=y;
         this.speed=speed;
-        
+                
     }
     
     public void drawn(Board board){
         board.paint(x,y,texture);
     }
     
-    public void update(float x,float y){
-        this.x = x;
-        this.y = y;
-        
-        
+     public void update(float z, float w,Board board){
+        board.paint(x,y,' ');
+         this.x=z;
+         this.y=w;
+        board.paint(x,y,texture);
+    }
+    
+    public boolean alive(Enemy enemy){
+        if(healt == 0){
+           return false; 
+        }else{return true;}
     }
     
     
@@ -35,7 +42,7 @@ public class Enemy {
     
     
     
-      public float getX() {
+    public float getX() {
         return x;
     }
 

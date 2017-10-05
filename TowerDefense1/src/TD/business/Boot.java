@@ -23,11 +23,49 @@ public class Boot  {
     
     
     public static void main(String[] args) {  
-        UI.MenuDevelop();
+        Star();
+    }
+    
+    public static void Star(){
+        
+       boolean exitOpt = false;
+         
+       while(!exitOpt){
+           
+        UI.printMenu();
+        
+        int userOpt =UI.menuDevelop();
+            
+           switch(userOpt){
+               case 1:
+                   exitOpt=true;
+                   startGame();                   
+                   break;
+               case 2:
+                   UI.gameInstruction();
+                   break;
+                case 3:
+                   UI.devNotes();
+                   break;
+                case 4:
+                   exitOpt=true;
+                   break;
+                default:
+                   UI.errorInt();
+                   
+           }
+        }
     }
 
-}
-   
+    private static void startGame() {
+        Map.newMap();
+        enemy=new Enemy(2,0,1);
+        wave= new Wave(1,enemy,board);
+        wave.update();
+        UI.printBoard(board); 
+    
+    
+    }} 
    // Enemy enemy = new Enemy (4,0,1);
    // enemy.drawn(board);
    //  UI.printBoard(board);

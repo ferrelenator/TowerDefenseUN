@@ -1,11 +1,13 @@
-/*package TD.business;
+/*
+package TD.business;
 
 import TD.data.*;
 import TD.ui.UI;
 import java.*;
 
-public class Timer implements Runnable {
-    
+public class Time implements Runnable {
+
+     
     private int timeLimit;
     private int counter = 0 ;
     public Timer(int timeLimit) {
@@ -61,6 +63,6 @@ public class Timer implements Runnable {
         return counter;
     }
     
-    
-}
-*/
+  */  
+
+

@@ -29,6 +29,7 @@ public class UI {
         System.out.println("de que lleguen al final del camino, puede recolectar");
         System.out.println("  dinero con cada baja, y asi mejorar sus defensas");
         System.out.println("      El jugador gana si completa las oleadas");
+        System.out.println("\n\n");
     }
     public static void devNotes(){
         System.out.println("            Indev5: 5ta version Tower Defense");
@@ -36,39 +37,23 @@ public class UI {
         System.out.println("       [>]Modificacion Completa De la Interfaz");
         System.out.println("       [>]Correccion de metodos para las clases");
         System.out.println("       [+]Adicion de Clases funcionales");
-        
+        System.out.println("\n\n");
     }
     
-    public static void MenuDevelop(){
-       boolean exitOpt = false;
+    public static int menuDevelop(){
        int userOpt;
-       
-       while(!exitOpt){
-           printMenu();
-           userOpt = readerMenu.nextInt();
-            
-           switch(userOpt){
-               case 1:
-                   Map.startGame();
-                   System.out.println("\n\n");
-                   break;
-               case 2:
-                   gameInstruction();
-                   System.out.println("\n\n");
-                   break;
-                case 3:
-                   devNotes();
-                   System.out.println("\n\n");
-                   break;
-                case 4:
-                   System.out.println("Saliendo del juego\n\n");
-                   exitOpt=true;
-                   break;
-                default:
-                   System.out.println("\n\nSolo números entre 1 y 4");
-                   
-           }
-        }
+       userOpt = readerMenu.nextInt();
+       return userOpt;
+    }
+    
+     public static int time(){
+       int i;
+       i = readerMenu.nextInt();
+       return 1;
+    }
+    
+    public static void errorInt(){
+        System.out.println("\n\nSolo números entre 1 y 4");
     }
     
     public static void printFiles(){
