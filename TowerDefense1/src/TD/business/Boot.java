@@ -10,18 +10,16 @@ TO DO:
 
 package TD.business;
 
-import TD.data.Wave;
+
 import TD.data.*;
 import TD.ui.UI;
 
 public class Boot  {
     
     private static Board board;
-    private static Tower tower;
-    private static Enemy enemy;
-    private static Wave wave;
-    
-    
+    private static Array array;
+    private static Artist art;
+    private static Turn turn;
     public static void main(String[] args) {  
         Star();
     }
@@ -57,21 +55,21 @@ public class Boot  {
         }
     }
 
-    private static void startGame() {
-        Map.newMap();
-        enemy=new Enemy(2,0,1);
-        wave= new Wave(1,enemy,board);
-        wave.update();
-        UI.printBoard(board); 
+    public static void startGame() {
+
+    board=new Board();
+    array= new Array();
+   array.newTower();  
+    art=new Artist();
+    art.paint(board,array);
+    System.out.println(art.getPrintBoard());
+    turn=new Turn(15,board,array,art);
+    turn.run();
+    }
     
-    
-    }} 
-   // Enemy enemy = new Enemy (4,0,1);
-   // enemy.drawn(board);
-   //  UI.printBoard(board);
-   // tower.drawn(board);
-   // enemy.drawn(board);
-    
+ 
+        
+}
     //timer.update(board,enemy,tower);
     
      //   for (int a = (int)enemy.getY() ; a < 10; a++){

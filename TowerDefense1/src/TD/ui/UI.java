@@ -2,7 +2,6 @@ package TD.ui;
 
 import java.util.Scanner;
 import TD.data.Board;
-import TD.data.Map;
 
 public class UI {
     
@@ -14,7 +13,7 @@ public class UI {
         System.out.println("[---Tower Defense Indev:5---]");
         System.out.println("|     Menu principal:       |");
         System.out.println("|     1.Nueva Partida.      |");
-        System.out.println("|     2.Instrucciones.      |");
+        System.out.println("|        2.Resumen.         |");
         System.out.println("|     3.Indev 5 Notes.      |");
         System.out.println("|     4.Salir del juego.    |");
         System.out.println("-----------------------------\n");
@@ -33,7 +32,7 @@ public class UI {
     }
     public static void devNotes(){
         System.out.println("            Indev5: 5ta version Tower Defense");
-        System.out.println("       [-]Retirado temporalmente el uso de Threads");
+        System.out.println("       [-]Retirado temporalmente el uso de Timer");
         System.out.println("       [>]Modificacion Completa De la Interfaz");
         System.out.println("       [>]Correccion de metodos para las clases");
         System.out.println("       [+]Adicion de Clases funcionales");
@@ -41,14 +40,19 @@ public class UI {
     }
     
     public static int menuDevelop(){
-       int userOpt;
-       userOpt = readerMenu.nextInt();
-       return userOpt;
+       return readerMenu.nextInt();
     }
+    
+    public static void towers(){
+        System.out.println("Select the square to locate the towers and press the enter key: ");
+        System.out.println("Select row and col for the 1st tower (it has to be on terrain (delimited with the X symbol))");
+
+}
     
      public static int time(){
        int i;
        i = readerMenu.nextInt();
+       
        return 1;
     }
     

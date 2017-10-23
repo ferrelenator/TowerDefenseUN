@@ -5,30 +5,16 @@ TO DO
  */
 package TD.data;
 
-public class Enemy {
+public class Enemy extends Square {
     
-    private int healt;
-    private float x,y,speed;
-    private final char texture='#';
+    private int healt,speed;
     
 
     
-    public Enemy(float x, float y,float speed){
-        this.x=x;
-        this.y=y;
+    public Enemy(int x, int y,char value,int speed){
+        super(x,y,value);
         this.speed=speed;
-                
-    }
-    
-    public void drawn(Board board){
-        board.paint(x,y,texture);
-    }
-    
-     public void update(float z, float w,Board board){
-        board.paint(x,y,' ');
-         this.x=z;
-         this.y=w;
-        board.paint(x,y,texture);
+         
     }
     
     public boolean alive(Enemy enemy){
@@ -36,33 +22,12 @@ public class Enemy {
            return false; 
         }else{return true;}
     }
-    
-    
-    
-    
-    
-    
-    public float getX() {
-        return x;
-    }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(float speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 }
