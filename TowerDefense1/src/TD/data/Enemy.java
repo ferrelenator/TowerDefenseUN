@@ -6,28 +6,28 @@ TO DO
 package TD.data;
 
 public class Enemy extends Square {
-    
-    private int healt,speed;
-    
 
+    private int health,speed;
     
-    public Enemy(int x, int y,char value,int speed){
+    public Enemy(int x, int y,char value,int speed,int health){
         super(x,y,value);
         this.speed=speed;
+        this.health=health;
          
     }
     
-    public boolean alive(Enemy enemy){
-        if(healt == 0){
-           return false; 
-        }else{return true;}
-    }
-
     public int getSpeed() {
         return speed;
     }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+    public int getHealt() {
+        return health;
+    }
+    public void setHealt(int healt) {
+        this.health = healt;
+    }
+
+  
 }

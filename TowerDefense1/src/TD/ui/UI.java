@@ -9,7 +9,6 @@ public class UI {
     private static Scanner readerMenu = new Scanner(System.in);
 
     public static void printMenu() {
-
         System.out.println("[---Tower Defense Indev:5---]");
         System.out.println("|     Menu principal:       |");
         System.out.println("|     1.Nueva Partida.      |");
@@ -39,35 +38,28 @@ public class UI {
         System.out.println("\n\n");
     }
     
-    public static int menuDevelop(){
+    public static int readerInt(){
        return readerMenu.nextInt();
     }
     
-    public static void towers(){
-        System.out.println("Select the square to locate the towers and press the enter key: ");
-        System.out.println("Select row and col for the 1st tower (it has to be on terrain (delimited with the X symbol))");
-
+    public static int[] towers(){
+        int[] i = new int[2];
+        System.out.println("Seleccione las coordeanadas para la nueva torre ");
+        System.out.println("Seleccione la fila : ");
+        i[0]=readerMenu.nextInt();
+        System.out.println("Seleccione la Columna : ");
+        i[1]=readerMenu.nextInt();
+        return i;
 }
-    
-     public static int time(){
-       int i;
-       i = readerMenu.nextInt();
-       
-       return 1;
-    }
-    
     public static void errorInt(){
-        System.out.println("\n\nSolo números entre 1 y 4");
+        System.out.println("\n\nSolo números");
     }
     
     public static void printFiles(){
-        System.out.print("       [0|1|2|3|4|5|6|7|8|9]");
-    }
-
+        System.out.print("[0|1|2|3|4|5|6|7|8|9]");
+    }  
     
     public static void printBoard(Board board) {
         System.out.println(board);
     }
-
-
 }

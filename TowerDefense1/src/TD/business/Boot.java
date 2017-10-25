@@ -17,29 +17,24 @@ import TD.ui.UI;
 public class Boot  {
     
     private static Board board;
-    private static Array array;
     private static Artist art;
     private static Turn turn;
+    private static Rule rule;
     public static void main(String[] args) {  
         Star();
     }
     
     public static void Star(){
-        
-       boolean exitOpt = false;
-         
-       while(!exitOpt){
-           
-        UI.printMenu();
-        
-        int userOpt =UI.menuDevelop();
-            
-           switch(userOpt){
-               case 1:
+        boolean exitOpt = false;
+        while(!exitOpt){    
+            UI.printMenu();
+            int userOpt =UI.readerInt();
+            switch(userOpt){
+                case 1:
                    exitOpt=true;
                    startGame();                   
                    break;
-               case 2:
+                case 2:
                    UI.gameInstruction();
                    break;
                 case 3:
@@ -49,35 +44,24 @@ public class Boot  {
                    exitOpt=true;
                    break;
                 default:
-                   UI.errorInt();
-                   
-           }
+                   UI.errorInt();        
+            }
         }
     }
 
     public static void startGame() {
 
-    board=new Board();
-    array= new Array();
-   array.newTower();  
-    art=new Artist();
-    art.paint(board,array);
-    System.out.println(art.getPrintBoard());
-    turn=new Turn(15,board,array,art);
-    turn.run();
+        board=new Board();
+        art=new Artist();
+        rule=new Rule(board);
+        board.newEnemy(2,0);
+        board.newTower();  
+        art.paint(board);
+        System.out.println(art.getPrintBoard());
+        turn=new Turn(20,board,art,rule);
+        turn.run();
     }
-    
- 
-        
 }
-    //timer.update(board,enemy,tower);
-    
-     //   for (int a = (int)enemy.getY() ; a < 10; a++){
-      //      enemy.update(enemy.getX(),a);
-      //      enemy.drawn(board);
-            
-      //      UI.printBoard(board);
-      //  }
         
     
     
