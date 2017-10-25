@@ -59,7 +59,7 @@ public class Board{
     
     public void newTower() {
         int[] i =UI.towers();
-        towerList.add(new Tower(i[0],i[1],'O',1));
+        towerList.add(new Tower(i[0],i[1],'O',1,1));
     }
 
     public Square[][] getBoard() {

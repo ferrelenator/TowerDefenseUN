@@ -10,11 +10,12 @@ package TD.data;
  */
 public class Tower extends Square {
     
-    private int damage;
+    private int damage,range;
     
-    public Tower(int row, int col, char value,int damage) {
+    public Tower(int row, int col, char value,int damage,int range) {
         super(row, col, value);
         this.damage=damage;
+        this.range=range;
     }
 
     public int getDamage() {
@@ -22,5 +23,11 @@ public class Tower extends Square {
     }
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+    public int getRange() {
+        return range;
+    }
+    public void setRange(int range) {
+        this.range = range;
     }
 }
