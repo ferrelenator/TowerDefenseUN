@@ -1,6 +1,7 @@
 package TD.business;
 
 import TD.data.*;
+import TD.ui.UI;
 
 public class Rule {
     
@@ -10,23 +11,30 @@ public class Rule {
         this.board=board;
     }
     
-    public void spawn(int time){
+    public void master(int time){
     moveEnemy();  
-    if(time%4 ==0){ 
-    board.newEnemy(2,0);   
-    }
+    spawn(time);
     attack();
-    }
     
+    }
+    public void spawn(int time){
+        if(time%4 ==0){ 
+            board.newEnemy(2,0);   
+        }    
+    }
     public void attack(){
-        for(Enemy e: board.getEnemyList()){
-            for(Tower t: board.getTowerList()){
-                int x,y,w,z,k;
+       int x,y,w,z,k; 
+       boolean first;
+        for(Tower t: board.getTowerList()){
+            first=true;
+            for(Enemy e: board.getEnemyList()){
+                if(first){
                 x=t.getRow();y=t.getCol();
                 w=e.getRow();z=e.getCol();
                 k=t.getRange();
                 if( (w>=(x-k)) && (w<=(x+k)) && (z>=(y-k)) && (z<=(y+k))){
-                    e.setHealt(e.getHealt()-t.getDamage());}
+                    e.setHealt(e.getHealt()-t.getDamage());first=false;}
+                }
             }
         }
         for(int i =0; i < board.getEnemyList().size() ; i++){
@@ -44,4 +52,14 @@ public class Rule {
                 e.setCol(e.getCol()+1);} 
         }
     }
+    public void askTower(){
+        boolean cont=true;
+        while(cont){
+        int[] i =UI.tower();
+        if(board.getBoard()[i[0]][i[1]].getValue()=='X'){
+            board.newTower( i[0], i[1]);
+            cont=false;
+        }else{UI.error(1);}}
+    }
+
 }

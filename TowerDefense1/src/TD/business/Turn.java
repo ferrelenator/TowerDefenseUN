@@ -3,19 +3,17 @@ package TD.business;
 
 
 import TD.data.*;
-
+import TD.ui.UI;
 public class Turn implements Runnable {
      
     private int timeLimit;
     private int counter = 0 ;
     private static Board board;
     private static Rule rule;
-    private static Artist art;
     
-    public Turn(int timeLimit,Board board,Artist art,Rule rule) {
+    public Turn(int timeLimit,Board board,Rule rule) {
         this.timeLimit = timeLimit;
         Turn.board=board;
-        Turn.art=art;
         Turn.rule=rule;
     }
     
@@ -27,11 +25,11 @@ public class Turn implements Runnable {
     public void run() {
         while (getCounter() < this.getTimeLimit()) {
             try {          
-                rule.spawn(counter);
-                art.paint(board);
-                System.out.println(art.getPrintBoard());  
+                rule.master(counter);
+                UI.printBoard(board);
                 System.out.println(counter); 
                 counter++;
+        //        UI.infoEnemy(board); UI.readerInt();
                 Thread.sleep(1000); 
                 } catch (InterruptedException ex) {
                 ex.printStackTrace();             

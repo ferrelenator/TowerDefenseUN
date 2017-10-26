@@ -17,7 +17,6 @@ import TD.ui.UI;
 public class Boot  {
     
     private static Board board;
-    private static Artist art;
     private static Turn turn;
     private static Rule rule;
     public static void main(String[] args) {  
@@ -44,7 +43,7 @@ public class Boot  {
                    exitOpt=true;
                    break;
                 default:
-                   UI.errorInt();        
+                   UI.error(0);        
             }
         }
     }
@@ -52,13 +51,12 @@ public class Boot  {
     public static void startGame() {
 
         board=new Board();
-        art=new Artist();
         rule=new Rule(board);
-        board.newEnemy(2,0);
-        board.newTower();  
-        art.paint(board);
-        System.out.println(art.getPrintBoard());
-        turn=new Turn(20,board,art,rule);
+        UI.printBoard(board);
+        rule.askTower();
+        UI.printBoard(board);
+
+        turn=new Turn(20,board,rule);
         turn.run();
     }
 }

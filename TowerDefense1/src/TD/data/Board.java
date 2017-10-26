@@ -57,9 +57,9 @@ public class Board{
         enemyList.add(new Enemy(x,y,'#',1,3));       
     }
     
-    public void newTower() {
-        int[] i =UI.towers();
-        towerList.add(new Tower(i[0],i[1],'O',1,1));
+    public void newTower(int x, int y) {
+
+        towerList.add(new Tower(x,y,'O',1,1));
     }
 
     public Square[][] getBoard() {

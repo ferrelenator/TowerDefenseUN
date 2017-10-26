@@ -42,7 +42,7 @@ public class UI {
        return readerMenu.nextInt();
     }
     
-    public static int[] towers(){
+    public static int[] tower(){
         int[] i = new int[2];
         System.out.println("Seleccione las coordeanadas para la nueva torre ");
         System.out.println("Seleccione la fila : ");
@@ -51,15 +51,52 @@ public class UI {
         i[1]=readerMenu.nextInt();
         return i;
 }
-    public static void errorInt(){
-        System.out.println("\n\nSolo números");
+     public static void infoEnemy(Board board){
+         board.getEnemyList().forEach((e) -> {
+             System.out.println("El enemigo "+e.getValue()+" Esta en las coordenadas ( "+e.getRow()
+                     +","+e.getCol()+" ) y actualmente tiene "+e.getHealt()+" de vida");
+        });
     }
     
-    public static void printFiles(){
-        System.out.print("[0|1|2|3|4|5|6|7|8|9]");
-    }  
+    public static void error(int i){
+        switch(i){
+            case 0:
+                System.out.println("\n Solo estan las opciones 1 , 2 , 3 , 4\n");
+                break;
+            case 1:
+                System.out.println("\n La torre no se puede colocar hay\n");
+                break;
+        }
+    }
     
     public static void printBoard(Board board) {
-        System.out.println(board);
+        String map=paint(board);
+        System.out.println(map);
+    }
+    
+    public static String paint(Board board) {
+        String printBoard= "\n"; 
+        char[][] value= new char[ board.getBoard().length][ board.getBoard().length];   
+         
+        for (int row = 0; row < board.getBoard().length; row++) {
+            for (int col = 0; col < board.getBoard().length; col++) {
+                value[row][col]=board.getBoard()[row][col].getValue();
+            }
+        }
+        board.getTowerList().forEach((t) -> {
+            value[t.getRow()][t.getCol()]= t.getValue();
+        });
+        board.getEnemyList().forEach((e) -> {
+            value[e.getRow()][e.getCol()]=e.getValue();
+        });    
+        for (int row = 0; row < board.getBoard().length; row++) {
+            printBoard=printBoard.concat("\t").concat("[").concat(String.valueOf(row)).concat("] ");
+                for (int col = 0; col < board.getBoard().length; col++) {
+                    printBoard =printBoard.concat(String.valueOf(value[row][col])).concat(" ");
+                }
+            printBoard = printBoard.concat("\n");
+        }
+        printBoard="\t   [0|1|2|3|4|5|6|7|8|9]".concat(printBoard);
+        return printBoard;    
     }
 }
