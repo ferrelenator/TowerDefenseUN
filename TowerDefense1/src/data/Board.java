@@ -1,6 +1,6 @@
-package TD.data;
+package data;
 
-import TD.ui.UI;
+import ui.UI;
 import java.util.ArrayList;
 
 
@@ -34,9 +34,6 @@ public class Board{
         for (int i = 0; i < newMap.length; i++) {
             for (int j = 0; j < newMap.length; j++) {
                 switch(newMap[i][j]){
-                    case 0:
-                        value='X';
-                        break;
                     case 1:
                         value=' ';
                         break;
@@ -46,6 +43,9 @@ public class Board{
                     case 3:
                         value='*';
                         break;
+                    default:
+                        value='X';
+                        break;
                 }
                 Square square = new Square(i, j,value);
                 board[i][j]=square;
@@ -54,12 +54,28 @@ public class Board{
     }
     
     public void newEnemy(int x,int y) {
-        enemyList.add(new Enemy(x,y,'#',1,3));       
+        enemyList.add(new Enemy(x,y));       
     }
     
-    public void newTower(int x, int y) {
-
-        towerList.add(new Tower(x,y,'O',1,1));
+    public void newTower(Player player,int x,int y) {
+        towerList.add(new Tower(player,x,y));
+    }
+    
+    public void killEnemy(Player player,int i) {
+        player.setMoney(player.getMoney()+ getEnemyList().get(i).getMoney());
+        UI.moneyEnemy(getEnemyList().get(i));
+        getEnemyList().remove(i);      
+    }
+    
+    public void winEnemy(Player player,int i) {
+        player.setLife(player.getLife()-getEnemyList().get(i).getDamage());
+        getEnemyList().remove(i);      
+    }
+    
+    public void removeTower(Player player,int i) {
+        player.setMoney(player.getMoney()+ getTowerList().get(i).getSell());
+        UI.moneyTower(getTowerList().get(i));
+        getTowerList().remove(i); 
     }
 
     public Square[][] getBoard() {

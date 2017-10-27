@@ -1,4 +1,4 @@
-package TD.data;
+package data;
 
 public class Square {
     
@@ -16,6 +16,10 @@ public class Square {
         return String.valueOf(this.getValue());
     }
 
+    public int[] test(){
+        int[] i={row,col};
+        return i;
+    }
     public int getRow() {
         return row;
     }
