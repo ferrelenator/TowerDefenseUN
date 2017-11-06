@@ -4,12 +4,12 @@ package data;
 public class Player {
     
     private int money,life;
-    
-    public Player(){
+    private String name;
+    public Player(String name){
         this.life=5;
-        this.money=200;
+        this.money=300;
+        this.name=name;
     }
-
     public int getMoney() {
         return money;
     }
@@ -21,5 +21,11 @@ public class Player {
     }
     public void setLife(int life) {
         this.life = life;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -1,8 +1,3 @@
-/*
-TO DO
-- Mover enemigo : Variable tiempo
-- Los enemigos deben tener velocidad , vida
- */
 package data;
 
 public class Enemy {
@@ -11,19 +6,10 @@ public class Enemy {
     private int health,speed,money,damage;
     
     public Enemy(int row, int col){
-        enemy1(row,col);
-         
+        this.square= new Square(row,col,'E');
     }
     
-    public void enemy1(int row,int col){
-        this.square= new Square(row,col,'#');
-        this.health=2;
-        this.speed=1;
-        this.money=15;  
-        this.setDamage(1);
-    }
-    
-        public int getRow(){
+    public int getRow(){
         return square.getRow();
     }
     public void setRow(int i){
@@ -59,8 +45,6 @@ public class Enemy {
     public void setMoney(int money) {
         this.money = money;
     }
-
-
     public int getDamage() {
         return damage;
     }

@@ -15,11 +15,6 @@ public class Square {
     public String toString() {
         return String.valueOf(this.getValue());
     }
-
-    public int[] test(){
-        int[] i={row,col};
-        return i;
-    }
     public int getRow() {
         return row;
     }

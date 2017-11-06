@@ -1,6 +1,5 @@
 package data;
 
-import ui.UI;
 import java.util.ArrayList;
 
 
@@ -25,7 +24,7 @@ public class Board{
                   {0,0,1,1,1,1,1,1,1,1},
                   {0,0,1,1,1,1,1,1,1,1},
                   {0,0,0,0,0,0,0,0,0,0},
-                  {2,2,2,2,2,2,0,0,0,0},
+                  {2,2,2,2,2,2,0,0,0,0}
                   };
                 
         board = new Square[newMap.length][newMap.length];
@@ -53,8 +52,11 @@ public class Board{
         }
     }
     
-    public void newEnemy(int x,int y) {
-        enemyList.add(new Enemy(x,y));       
+    public void newEnemy1(int x,int y) {
+        enemyList.add(new Enemy1(x,y));       
+    }
+    public void newEnemy2(int x,int y) {
+        enemyList.add(new Enemy2(x,y));       
     }
     
     public void newTower(Player player,int x,int y) {
@@ -63,7 +65,6 @@ public class Board{
     
     public void killEnemy(Player player,int i) {
         player.setMoney(player.getMoney()+ getEnemyList().get(i).getMoney());
-        UI.moneyEnemy(getEnemyList().get(i));
         getEnemyList().remove(i);      
     }
     
@@ -74,7 +75,6 @@ public class Board{
     
     public void removeTower(Player player,int i) {
         player.setMoney(player.getMoney()+ getTowerList().get(i).getSell());
-        UI.moneyTower(getTowerList().get(i));
         getTowerList().remove(i); 
     }
 
@@ -97,17 +97,3 @@ public class Board{
         return towerList;
     }
 }
-
-    /*
-    public Board() {
-        board = new Square[10][10];
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board.length; col++) {
-                Square square = new Square(row, col,'X');
-                board[row][col] = square;
-            }
-        }
-        
-
-    }
-    */

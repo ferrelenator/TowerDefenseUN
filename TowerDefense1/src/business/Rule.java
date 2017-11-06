@@ -7,32 +7,58 @@ public class Rule {
     
     private Board board;
     private Player player;
+    private UI ui;
     private int wave,waveMax;
     
-    public Rule(Board board,Player player){
+    
+    public Rule(Board board,Player player,UI ui){
         this.board=board;
         this.player=player;
         this.wave=0;
-        this.waveMax=3;
+        this.waveMax=5;
+        this.ui=ui;
     }
     
     public void master(int time){
     moveEnemy();  
     wave(time);
-    if(!board.getEnemyList().isEmpty()){
-        attack();
-        removeEnemy();
+    attack();
+    removeEnemy();
     }
-    }
-    
     
     public void wave(int time){
-        if(wave<getWaveMax()){
-        if(time%2 ==0){ 
-        wave++;
-        board.newEnemy(2,0); 
-        board.newEnemy(3,0);  
-        }}
+        if(wave<waveMax){
+        if(time%3 ==0){ 
+            switch(wave){
+                case 0:
+                board.newEnemy1(2,0); 
+                board.newEnemy1(3,0);
+                break;
+                case 1:
+                board.newEnemy1(2,0);
+                board.newEnemy1(2,0);
+                board.newEnemy1(3,0);
+                break;
+                case 2:
+                board.newEnemy1(2,0);
+                board.newEnemy1(2,0);
+                board.newEnemy1(3,0);
+                board.newEnemy1(3,0);
+                break;
+                case 3:
+                board.newEnemy2(2,0);
+                board.newEnemy2(3,0);
+                break;
+                case 4:
+                board.newEnemy2(2,0);
+                board.newEnemy2(2,0);
+                board.newEnemy2(3,0);
+                board.newEnemy2(3,0);
+                break;
+                default:
+                break;} wave++;        
+        }
+        }
         
     }
     
@@ -68,19 +94,19 @@ public class Rule {
         if(player.getMoney()>=100){
             while(cont){
                 cont2=true;
-                int[] i =UI.placeTower();
+                int[] i =ui.placeTower();
                 for(Tower t: board.getTowerList()){
                     if(t.getRow()==i[0] && t.getCol()==i[1]){
-                        UI.error(1);cont2=false;
+                        ui.error(1);cont2=false;
                     }
                 }
                 if(cont2){
                     if(board.getBoard()[i[0]][i[1]].getValue()=='X'){
                         board.newTower(player, i[0], i[1]);
-                        cont=false;}else{UI.error(1);}
+                        cont=false;}else{ui.error(1);}
                 }
             }
-        }else{UI.error(2);}
+        }else{ui.error(2);}
     }
     
     public void removeEnemy(){
@@ -90,12 +116,14 @@ public class Rule {
                 board.winEnemy(player, j);
             }
             if(board.getEnemyList().get(j).getHealth()<= 0){
+                ui.moneyEnemy(board.getEnemyList().get(j));
                 board.killEnemy(player, j);
             }
         }
     }
     public void removeTower(){
-         int i = UI.selectTower(board);
+         int i = ui.selectTower(board);
+         ui.moneyTower(board.getTowerList().get(i));
          board.removeTower(player, i);
     }
     public int getWave() {
@@ -104,17 +132,9 @@ public class Rule {
     public void setWave(int wave) {
         this.wave = wave;
     }
-
-    /**
-     * @return the waveMax
-     */
     public int getWaveMax() {
         return waveMax;
     }
-
-    /**
-     * @param waveMax the waveMax to set
-     */
     public void setWaveMax(int waveMax) {
         this.waveMax = waveMax;
     }

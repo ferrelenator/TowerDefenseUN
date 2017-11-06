@@ -6,7 +6,6 @@ package data;
  *TODO
 - Crear proyectiles
 - Disparar proyectiles 
-- Creacion de torres por consola
  */
 public class Tower {
     
@@ -23,7 +22,7 @@ public class Tower {
     
     public void tower1(int x,int y){
         this.setSquare(new Square(x,y,'O'));
-        this.damage=1;
+        this.damage=10;
         this.price=100;
         this.range=1;
     }
