@@ -41,7 +41,7 @@ public class Boot  {
  
     public static void main(String[] args) {  
     selectUI(args); 
-   Star();
+    Star();
     }
     
     public static void Star(){
