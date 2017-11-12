@@ -21,7 +21,7 @@ public interface UI {
     public void credits();
     public int printMenu();   
     public String playerName();
-    public void update(Board board,Player player,Turn turn);
+    public void charge(Board board,Player player, int second);
     public int[] placeTower();
     public void moneyEnemy(Enemy enemy);
     public void moneyTower(Tower tower);

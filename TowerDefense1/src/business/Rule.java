@@ -102,7 +102,7 @@ public class Rule {
                 }
                 if(cont2){
                     if(board.getBoard()[i[0]][i[1]].getValue()=='X'){
-                        board.newTower(player, i[0], i[1]);
+                        board.newTower1(player, i[0], i[1]);
                         cont=false;}else{ui.error(1);}
                 }
             }

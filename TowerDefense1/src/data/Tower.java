@@ -10,22 +10,17 @@ package data;
 public class Tower {
     
     private Square square;
-    private Player player;
     private int damage,range,price,sell;
     
-    public Tower(Player player,int row,int col) {
-        tower1(row,col);
+    public Tower(int row,int col,int damage,int price,int range) {
+        this.square=new Square(row,col,'O');
+        this.damage=damage;
+        this.price=price;
+        this.range=range;
         this.sell= price/2;
-        player.setMoney(player.getMoney()-price);
+        
     }
     
-    
-    public void tower1(int x,int y){
-        this.setSquare(new Square(x,y,'O'));
-        this.damage=10;
-        this.price=100;
-        this.range=1;
-    }
     
     public int getDamage() {
         return damage;

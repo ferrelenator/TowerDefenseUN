@@ -1,8 +1,12 @@
 /*
 TO DO:
-- Tipos de torres 
-- Tipos de enemigos
+-Logica del jeugo en cuanto a JUGABILIDAD es decir OLEADAS DAÑO DINERO
 - Actualizar torres
+-Cuadrar los metodos de UISwing()
+    -UISwing usa la ayuda de gui de NETBEANS
+    -UISwing2 no la usa esta es para personalizar el tablero
+    - al final la idea es juntar ambas y lograr una sola UISwing pero para eso toca editar el codigo
+    -UISwing() y romepria el editor grafico de Netbeans se ahce al final cuando ya ete funcionando
 - Crear Oleadas y manejo de oleadas
 - Pausar el tiempo o adelantarlo
 - verificar metodo para hacer mover al enemigo esta en Rule moveEnemy()
@@ -13,121 +17,58 @@ no sean numeros
 */
 
 package business;
-
-import data.Board;
-import data.Player;
 import ui.UI;
 import ui.UIText;
-
+import ui.UISwing;
 
 public class Boot  {
     
-    private static Board board;
-    private static Player player;
+    
     private static Turn turn;
-    private static Rule rule;
     private static UI ui;
     private static boolean cycle ;
-    private static boolean  exit;
     
-    public static void main(String[] args) {  
-         if (args.length == 0) {
-            ui = new UIText();
+     private static void selectUI(String[] args) {
+        if (args.length == 0) {
+            ui = new UISwing();
+            
         } else if (args[0].equals("text")) {
             ui = new UIText();
         } else {
-            ui = new UIText();
+            ui = new UISwing();
         }
-        Star();
+    }
+ 
+    public static void main(String[] args) {  
+    selectUI(args); 
+   Star();
     }
     
     public static void Star(){
         cycle=true;
+        
         while(cycle){
             int userOpt =ui.printTitle();
             switch(userOpt){
                 case 1:
-                    newGame();             
+                   newGame();             
                     break;
                 case 2:
                     ui.instructions();
                     break;
-                case 4:
+                case 3:
                     ui.credits();
                     break;
-                case 5:
+                case 4:
                     System.exit(0);
                     break;
-                default:
-                   ui.error(0);        
-            }
+                }
         }
     }
-
     public static void newGame() {
-        board=new Board();
-        player = new Player(ui.playerName());
-        rule=new Rule(board,player,ui);
-        turn=new Turn(1);
-        game();    
-    }
-    public static void game() {
-        exit = false;
-        int user =0;
-        while (!exit) {
-            exitG();
-            if(!exit){
-                ui.update(board, player, turn);
-                if(user!=9){
-                    user =ui.printMenu();
-                }
-                switch(user){
-                    case 1:
-                        turn.run();  
-                        rule.master(turn.getCounter());     
-                        break;
-                    case 2:
-                        rule.askTower();
-                        break;
-                    case 3:
-                        rule.removeTower();
-                        break;
-                    case 4:
-                        ui.infoPlayer(player);
-                        break;
-                    case 5:
-                        ui.infoTower(board);
-                        break;
-                    case 6:
-                        ui.infoEnemy(board);
-                        break;    
-                    case 7:
-                        exit=true;
-                        break;  
-                    case 8:
-                        System.exit(0);
-                        break;                         
-                    case 9:
-                        turn.run();
-                        rule.master(turn.getCounter());
-                        break;
-                    default:
-                        ui.error(0);
-                        break;
-                }
-            }
-        }
-    }
-        
- public static void exitG(){
-        if(rule.getWave()==rule.getWaveMax() && board.getEnemyList().isEmpty()){
-            exit=true;
-            ui.win(0);
-        }
-        if(player.getLife()<= 0){
-            exit=true;
-            ui.win(1);
-        }
+       
+       turn=new Turn(ui); 
+       turn.game();    
     }
 }
     

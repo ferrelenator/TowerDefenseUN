@@ -53,14 +53,20 @@ public class Board{
     }
     
     public void newEnemy1(int x,int y) {
-        enemyList.add(new Enemy1(x,y));       
+        enemyList.add(new Enemy(x,y,'#',30,1,15,1));       
     }
     public void newEnemy2(int x,int y) {
-        enemyList.add(new Enemy2(x,y));       
+        enemyList.add(new Enemy(x,y,'$',40,1,20,1));     
     }
     
-    public void newTower(Player player,int x,int y) {
-        towerList.add(new Tower(player,x,y));
+    public void newTower1(Player player,int x,int y) {
+        player.setMoney(player.getMoney()-100);
+        towerList.add(new Tower(x,y,10,100,1));  
+    }
+    
+    public void newTower2(Player player,int x,int y) {
+        player.setMoney(player.getMoney()-150);
+        towerList.add(new Tower(x,y,5,150,2));  
     }
     
     public void killEnemy(Player player,int i) {

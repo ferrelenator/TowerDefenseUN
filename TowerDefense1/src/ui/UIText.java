@@ -66,12 +66,12 @@ public class UIText implements UI {
         return name;
     }
     
-    public void update(Board board,Player player,Turn turn){
+    public void charge(Board board,Player player, int second){
         printBoard(board);
         infoEnemy(board);
         infoTower(board);
-        infoTime(turn.getCounter());
-        infoPlayer(player);       
+        infoPlayer(player); 
+        infoTime(second);
     }
     public void infoTime(int i){
         System.out.println("Ha  pasado "+i+" Segundos");
@@ -165,6 +165,7 @@ public class UIText implements UI {
     }
 
     public  void printBoard(Board board) {
+        
         String printBoard= "\n"; 
         char[][] value= new char[ board.getBoard().length][ board.getBoard().length];   
          

@@ -5,8 +5,12 @@ public class Enemy {
     private Square square;
     private int health,speed,money,damage;
     
-    public Enemy(int row, int col){
-        this.square= new Square(row,col,'E');
+    public Enemy(int row, int col,char value,int health,int speed,int money,int damage){
+      this.square=new Square(row,col,value);  
+      this.health=health;
+      this.speed=speed;
+      this.money=money;
+      this.damage=damage;
     }
     
     public int getRow(){
