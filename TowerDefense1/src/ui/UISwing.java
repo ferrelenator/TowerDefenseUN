@@ -40,22 +40,16 @@ public class UISwing extends JFrame implements UI {
     private Board board;
     private Player player;
     private int select;
+    private boolean charge=false;
     /**
      * Creates new form UISwing3
      */
-    public UISwing(Board board) {
-        this.board=board;
+    public UISwing() {
         initComponents();
         //Dimmension(832,640);
         Menu.setVisible(true);
         Game.setVisible(false);
         Pause.setVisible(false);
-        myBoard=new GameBoard(board);
-        panelBoard.add(myBoard);
-        myBoard.setVisible(true);
-        this.revalidate();
-        this.repaint();
-       
         this.pack();
         this.setVisible(true);
       
@@ -65,67 +59,39 @@ public class UISwing extends JFrame implements UI {
         
         
         private int timeLimit=2;
-        private Board board;
+        
         public Thread thread= new Thread(this);
-        private BufferedImage grass,road,enemy,rock,tower;
-        private Image[][] terrain=new Image[10][10];
-        private Image[][] entity=new Image[10][10];
         Dimension size=new Dimension(640,640);
         
-        public GameBoard(Board board){
-            loadImages();
-            this.board=board;
+        public GameBoard(){
         setPreferredSize(size);
-        for (int row = 0; row < board.getBoard().length; row++) {
-            for (int col = 0; col < board.getBoard().length; col++) {
-                switch(board.getBoard()[row][col].getValue()){
-                    case 'X':
-                      terrain[row][col]= grass;
-                    break;
-                    case ' ':
-                      terrain[row][col]= road;
-                      break;
-                    default:
-                      terrain[row][col]= grass;
-                      break;}}}
+          for (int row = 0; row < board.getBoard().length; row++) {
+                for (int col = 0; col < board.getBoard().length; col++) {
+                 board.getBoard()[row][col].init(row, col);
+            }}
         
-         board.getTowerList().forEach((t) -> {
-           entity[t.getRow()][t.getCol()]= tower;
+        }
+        
+        public void reinit(){
+        board.getTowerList().forEach((t) -> {
+            t.getSquare().init(t.getRow(), t.getCol());
         });
         board.getEnemyList().forEach((e) -> {
-            entity[e.getRow()][e.getCol()]=enemy;
-        });    
-     
+         e.getSquare().init(e.getRow(),e.getCol());
+        }); 
         }
-
-        public void loadImages(){
-            try {                
-            this.grass = ImageIO.read(new File("src/resources/towerDefense_tile024.png"));
-            this.road = ImageIO.read(new File("src/resources/towerDefense_tile050.png"));
-            this.rock = ImageIO.read(new File("src/resources/towerDefense_tile136.png"));
-            this.tower = ImageIO.read(new File("src/resources/towerDefense_tile206.png"));
-            this.enemy = ImageIO.read(new File("src/resources/towerDefense_tile245.png"));
-         } catch (IOException ex) {}
-        }
-               
+        
         public void stop() {
         timeLimit=-1;
         }
-    
         public void resume(){
         timeLimit=2;
         }
         @Override
         public void run() {
-            
             while(timeLimit>1){
                 try {
-   /*    board.getTowerList().forEach((t) -> {
-           entity[t.getRow()][t.getCol()]= tower;
-        });
-        board.getEnemyList().forEach((e) -> {
-            entity[e.getRow()][e.getCol()]=enemy;
-        });    */
+                    reinit();
                     repaint();
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
@@ -133,25 +99,25 @@ public class UISwing extends JFrame implements UI {
                 }
             }
         }
+        
+       
         @Override
         protected void paintComponent(Graphics g){
          super.paintComponent(g);      
-        
-        
-       for (int row = 0; row < board.getBoard().length; row++) {
+          
+        for (int row = 0; row < board.getBoard().length; row++) {
                 for (int col = 0; col < board.getBoard().length; col++) {
-                 g.drawImage(terrain[col][row],row*64,col*64,this);}}  
-     
+                 board.getBoard()[row][col].draw(g, this);
+            }}
         board.getTowerList().forEach((t) -> {
-            g.drawImage(entity[t.getRow()][t.getCol()],t.getRow()*64,t.getCol()*64,this);
+            t.getSquare().draw(g,this);
         });
         board.getEnemyList().forEach((e) -> {
-           g.drawImage(entity[e.getRow()][e.getCol()],e.getRow()*64,e.getCol()*64,this);
-        });  
- 
-
+            e.getSquare().draw(g,this);
+        }); 
+        
         }
-    }
+}
      
     private void pause() {
         try {
@@ -182,11 +148,7 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public int printMenu() {
-        select = -1;
-          while (select  == -1) {
-            pause();
-        }
-       return select;
+       return 1;
     }
 
     @Override
@@ -196,7 +158,7 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void charge(Board board, Player player, int second) {
-  
+        
     }
 
     @Override
@@ -254,7 +216,13 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void printBoard(Board board) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.board=board;    
+        charge =true;
+        myBoard=new GameBoard();
+        panelBoard.add(myBoard);
+        this.revalidate();
+        this.repaint();
+        myBoard.setVisible(true);
     }
     
     

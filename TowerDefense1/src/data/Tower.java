@@ -1,6 +1,8 @@
 
 package data;
 
+import java.awt.image.BufferedImage;
+
 
 /**
  *TODO
@@ -12,8 +14,8 @@ public class Tower {
     private Square square;
     private int damage,range,price,sell;
     
-    public Tower(int row,int col,int damage,int price,int range) {
-        this.square=new Square(row,col,'O');
+    public Tower(int row,int col,int damage,int price,int range,BufferedImage image) {
+        this.square=new Square(row,col,'O',image);
         this.damage=damage;
         this.price=price;
         this.range=range;

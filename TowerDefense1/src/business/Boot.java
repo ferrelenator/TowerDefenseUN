@@ -19,7 +19,9 @@ no sean numeros
 package business;
 import data.Board;
 import data.Player;
+import data.Square;
 import data.Texture;
+import java.awt.image.BufferedImage;
 import ui.UI;
 import ui.UIText;
 import ui.UISwing;
@@ -27,6 +29,7 @@ import ui.UITest;
 
 public class Boot  {
     
+    private static Texture texture;
     private static Board board;
     private static Player player;
     private static boolean cycle ;
@@ -38,8 +41,8 @@ public class Boot  {
     
    private static void selectUI(String[] args) {
         if (args.length == 0) {
-        //    ui = new UISwing();
-           ui = new UIText(); 
+           ui = new UISwing();
+        //    ui = new UIText(); 
             
         } else if (args[0].equals("text")) {
             ui = new UIText();
@@ -49,15 +52,13 @@ public class Boot  {
     }
 
     public static void main(String[] args) {  
-   selectUI(args); 
+    selectUI(args); 
     Star();
-    newGame();
-    
     }
     
     public static void Star(){
         cycle=true;
-        
+        texture= new Texture();
         while(cycle){
             int userOpt =ui.printTitle();
             switch(userOpt){
@@ -77,38 +78,56 @@ public class Boot  {
         }
     }
     public static void newGame() {
-       board=new Board();
-       turn=new Turn(ui); 
-      
-       
-    //   this.ui=new UISwing(board);
+       board=new Board(texture);
+       newMap(board,texture);
        player = new Player(ui.playerName());
        rule=new Rule(board,player,ui);
-       
+       turn=new Turn(rule); 
        turn.run();    
     }
     
-    public void newMap(){
-        Texture texture;
+    public static void newMap(Board board,Texture texture){
+        
+        BufferedImage image;
         char value;
-        for (int i = 0; i < newMap.length; i++) {
-            for (int j = 0; j < newMap.length; j++) {
-                switch(newMap[i][j]){
+        for (int i = 0; i < board.getMap().getSize(); i++) {
+            for (int j = 0; j < board.getMap().getSize(); j++) {
+                switch(board.getMap().getMap()[i][j]){
                     case 1:
-                        value=' ';
+                        value='X';image=texture.getGrass();
                         break;
                     case 2:
-                        value='~';
+                        value=' ';image=texture.getRoad();
                         break;
                     case 3:
-                        value='*';
+                        value=' ';image=texture.getRoad3();
                         break;
+                    case 4:
+                        value=' ';image=texture.getRoad4();
+                        break;
+                    case 5:
+                        value=' ';image=texture.getRoad5();
+                        break;
+                    case 6:
+                        value=' ';image=texture.getRoad6();
+                        break;
+                    case 7:
+                        value=' ';image=texture.getRoad7();
+                        break;
+                    case 8:
+                        value=' ';image=texture.getRoad8();
+                        break;  
+                    case 9:
+                        value=' ';image=texture.getRoad9();
+                        break;  
+                    case 10:
+                        value=' ';image=texture.getRoad10();
+                        break;      
                     default:
-                        value='X';
+                        value='X';image=texture.getGrass();
                         break;
                 }
-                Square square = new Square(i, j,value);
-                board[i][j]=square;
+                board.newBoard(i, j, value, image);
             }
         }
     }

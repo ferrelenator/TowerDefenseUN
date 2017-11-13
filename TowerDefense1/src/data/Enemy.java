@@ -1,12 +1,15 @@
 package data;
 
+import java.awt.image.BufferedImage;
+
 public class Enemy {
     
     private Square square;
     private int health,speed,money,damage;
     
-    public Enemy(int row, int col,char value,int health,int speed,int money,int damage){
-      this.square=new Square(row,col,value);  
+    
+    public Enemy(int row, int col,char value,int health,int speed,int money,int damage,BufferedImage image){
+      this.square=new Square(row,col,value,image);  
       this.health=health;
       this.speed=speed;
       this.money=money;
@@ -14,22 +17,22 @@ public class Enemy {
     }
     
     public int getRow(){
-        return square.getRow();
+        return getSquare().getRow();
     }
     public void setRow(int i){
-        square.setRow(i);
+        getSquare().setRow(i);
     }
     public int getCol(){
-        return square.getCol();
+        return getSquare().getCol();
     }
     public void setCol(int i){
-        square.setCol(i);
+        getSquare().setCol(i);
     }  
     public char getValue(){
-        return square.getValue();
+        return getSquare().getValue();
     }
     public void setValue(char i){
-        square.setValue(i);
+        getSquare().setValue(i);
     } 
     public int getSpeed() {
         return speed;
@@ -54,5 +57,19 @@ public class Enemy {
     }
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    /**
+     * @return the square
+     */
+    public Square getSquare() {
+        return square;
+    }
+
+    /**
+     * @param square the square to set
+     */
+    public void setSquare(Square square) {
+        this.square = square;
     }
 }

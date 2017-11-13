@@ -1,36 +1,47 @@
 package data;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
 public class Board{
     
     private Square[][] board;
+    private Texture texture;
+    private Map map;
     private ArrayList<Enemy> enemyList;
     private ArrayList<Tower> towerList;
-
-    public Board(){  
     
+
+    public Board(Texture texture){  
+        this.texture=texture;
+        map= new Map();
+        board=new Square[map.getSize()][map.getSize()];
         enemyList= new ArrayList<>();
         towerList= new ArrayList<>();
-        board=new Board[][];
+        
+    }
+    
+    public void newBoard(int i,int j,char value,BufferedImage image){
+        Square square = new Square( i, j, value, image);
+        board[i][j]= square;
     }
     
     public void newEnemy1(int x,int y) {
-        enemyList.add(new Enemy(x,y,'#',30,1,15,1));       
+        enemyList.add(new Enemy(x,y,'#',30,1,15,1,texture.getEnemy1()));       
     }
     public void newEnemy2(int x,int y) {
-        enemyList.add(new Enemy(x,y,'$',40,1,20,1));     
+        enemyList.add(new Enemy(x,y,'$',40,1,20,1,texture.getEnemy2()));     
     }
     
     public void newTower1(Player player,int x,int y) {
         player.setMoney(player.getMoney()-100);
-        towerList.add(new Tower(x,y,10,100,1));  
+        towerList.add(new Tower(x,y,10,100,1,texture.getTower1()));  
     }
     
     public void newTower2(Player player,int x,int y) {
         player.setMoney(player.getMoney()-150);
-        towerList.add(new Tower(x,y,5,150,2));  
+        towerList.add(new Tower(x,y,5,150,2,texture.getTower2()));  
     }
     
     public void killEnemy(Player player,int i) {
@@ -65,5 +76,11 @@ public class Board{
     }
     public ArrayList<Tower> getTowerList() {
         return towerList;
+    }
+    public Map getMap() {
+        return map;
+    }
+    public void setMap(Map map) {
+        this.map = map;
     }
 }

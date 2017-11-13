@@ -11,16 +11,18 @@ package data;
  */
 public class Map {
     private int[][] map;
+    private int size;
     public Map(){
-        
-     map= new int[]{
+        size=10;
+     map= new int[size][size];
+     map= new int[][]{
                   {1,1,1,1,1,1,1,1,1,1},
                   {1,1,1,1,1,1,1,1,1,1},
-                  {3,3,3,3,7,1,1,1,1,1},
+                  {3,3,3,3,9,1,1,1,1,1},
                   {5,5,5,8,4,1,1,1,1,1},
                   {1,1,1,6,4,1,1,1,1,1},
                   {1,1,1,6,7,3,3,3,3,3},
-                  {1,1,1,8,5,5,5,5,5,5},
+                  {1,1,1,10,5,5,5,5,5,5},
                   {1,1,1,1,1,1,1,1,1,1},
                   {1,1,1,1,1,1,1,1,1,1},
                   {1,1,1,1,1,1,1,1,1,1}
@@ -33,10 +35,22 @@ public class Map {
     public void setMap(int[][] map) {
         this.map = map;
     }
-    
-    public int lenght(){
-        return map[].length;
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
     }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
+    
+    
     
     
     

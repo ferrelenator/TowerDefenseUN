@@ -5,7 +5,6 @@ import data.Board;
 import data.Enemy;
 import data.Tower;
 import data.Player;
-import business.Turn;
 public class UIText implements UI {
     
     
@@ -167,10 +166,11 @@ public class UIText implements UI {
     public  void printBoard(Board board) {
         
         String printBoard= "\n"; 
-        char[][] value= new char[ board.getBoard().length][ board.getBoard().length];   
+        int size=board.getMap().getSize();
+        char[][] value= new char[size][ size];   
          
-        for (int row = 0; row < board.getBoard().length; row++) {
-            for (int col = 0; col < board.getBoard().length; col++) {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
                 value[row][col]=board.getBoard()[row][col].getValue();
             }
         }
@@ -180,9 +180,9 @@ public class UIText implements UI {
         board.getEnemyList().forEach((e) -> {
             value[e.getRow()][e.getCol()]=e.getValue();
         });    
-        for (int row = 0; row < board.getBoard().length; row++) {
+        for (int row = 0; row < size; row++) {
             printBoard=printBoard.concat("\t").concat("[").concat(String.valueOf(row)).concat("] ");
-                for (int col = 0; col < board.getBoard().length; col++) {
+                for (int col = 0; col < size; col++) {
                     printBoard =printBoard.concat(String.valueOf(value[row][col])).concat(" ");
                 }
             printBoard = printBoard.concat("\n");

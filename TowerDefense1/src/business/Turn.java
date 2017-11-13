@@ -6,24 +6,22 @@ package business;
 import data.Board;
 import data.Player;
 import ui.UI;
-import ui.UISwing;
 public class Turn implements Runnable {
      
     private Board board;
     private Player player;
     private Rule rule;
     private int timeLimit=2;
-    private int seconds=2;
     private int counter = 0 ;
     private boolean exit;
-    private int user;
     private UI ui;
 
     
-    public Turn(UI ui) {
- 
-       
-       
+    public Turn(Rule rule) {
+        this.rule=rule;
+        this.board=rule.getBoard();
+        this.player=rule.getPlayer();
+        this.ui=rule.getUi();
     }
     
     public void stop() {
@@ -37,28 +35,24 @@ public class Turn implements Runnable {
     @Override
     public void run() {
         exit = false;
+        ui.printBoard(board);
         while(timeLimit>1){
-            ui.printBoard(board);
-            try { 
             exitG();
             if(!exit){
              game();
-            System.out.println("si llega"); 
+             ui.charge(board, player,counter);
+            try{
             Thread.sleep(1000);
-            counter++;         } else{System.out.println("acabo");}          
-            } catch (InterruptedException ex) {  }
+            counter++; } catch (InterruptedException ex) {  }
+            } else{}          
+            
         }
     }
     
     public void game() {
-      
-            user=9;           
-     user =ui.printMenu();
-            if(user!=9){
-                switch(user){
+    switch(ui.printMenu()){
                     case 1:
                         rule.master(counter);  
-                        ui.charge(board, player,counter);
                         break;
                     case 2:
                         rule.askTower();
@@ -85,10 +79,7 @@ public class Turn implements Runnable {
                         ui.error(0);
                         break;
                 }
-            }else{rule.master(counter);
-            ui.charge(board, player,counter);}
-        
-    }
+            }
     
      public void exitG(){
         if(rule.getWave()==rule.getWaveMax() && board.getEnemyList().isEmpty()){
@@ -101,10 +92,6 @@ public class Turn implements Runnable {
         }
     }
     
-    public void newMap(){
-        
-    }
-     
      
     public int getCounter() {
         return counter;

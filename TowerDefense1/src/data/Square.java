@@ -3,6 +3,7 @@ package data;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 public class Square extends Rectangle{
     
     private int row,col;
@@ -13,18 +14,21 @@ public class Square extends Rectangle{
         this.col = col;
         this.value = value;
         this.texture=texture;
+    }
+    
+    public void init(int x, int y){
+        this.x=y*64;
+        this.y=x*64;
         this.width=64;
         this.height=64;
-        this.x=col;
-        this.y=row;
-        this.setBounds(x, y, width,height);
+        this.setBounds(y*64, x*64, width,height);
     }
     
-    
-    public void draw(Graphics g){
+    public void draw(Graphics g,ImageObserver io){
         g.drawRect(x, y, width,height);
-    //    g.drawImage(getTexture(), x, y, this);
+        g.drawImage(texture, x,y, io);
     }
+    
     
     @Override
     public String toString() {
@@ -48,24 +52,10 @@ public class Square extends Rectangle{
     public void setValue(char value) {
         this.value = value;
     }
-    
-   
-
-    /**
-     * @return the texture
-     */
     public BufferedImage getTexture() {
         return texture;
     }
-
-    /**
-     * @param texture the texture to set
-     */
     public void setTexture(BufferedImage texture) {
         this.texture = texture;
     }
-
-    
-    
-    
 }

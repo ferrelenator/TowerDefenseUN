@@ -24,53 +24,28 @@ import ui.UISwing;
  */
 public class Texture implements Serializable {
     
-    private BufferedImage grass,road,road1,road2,road3,road4,road5,road6,road7,road8,enemy,rock,tower;
-    public Texture(){
+    private BufferedImage grass,road,road3,road4,road5,road6,road7,road8,enemy1,enemy2,rock,tower1,tower2,road9,road10;
+    public  Texture(){
         try {                
             this.grass = ImageIO.read(new File("src/resources/towerDefense_tile024.png"));
-            this.road1 = ImageIO.read(new File("src/resources/towerDefense_tile001.png"));
-            this.road2 = ImageIO.read(new File("src/resources/towerDefense_tile050.png"));
+            this.road = ImageIO.read(new File("src/resources/towerDefense_tile050.png"));
+  
+            
             this.road3 = ImageIO.read(new File("src/resources/towerDefense_tile047.png"));
             this.road4 = ImageIO.read(new File("src/resources/towerDefense_tile023.png"));
             this.road5 = ImageIO.read(new File("src/resources/towerDefense_tile001.png"));
             this.road6 = ImageIO.read(new File("src/resources/towerDefense_tile025.png"));
             this.road7 = ImageIO.read(new File("src/resources/towerDefense_tile046.png"));
             this.road8 = ImageIO.read(new File("src/resources/towerDefense_tile002.png"));
+            this.road9 = ImageIO.read(new File("src/resources/towerDefense_tile004.png"));
+            this.road10 = ImageIO.read(new File("src/resources/towerDefense_tile026.png"));
+            
             this.rock = ImageIO.read(new File("src/resources/towerDefense_tile136.png"));
-            this.tower = ImageIO.read(new File("src/resources/towerDefense_tile206.png"));
-            this.enemy = ImageIO.read(new File("src/resources/towerDefense_tile245.png"));
+            this.tower1 = ImageIO.read(new File("src/resources/towerDefense_tile206.png"));
+            this.tower2 = ImageIO.read(new File("src/resources/towerDefense_tile249.png"));
+            this.enemy1 = ImageIO.read(new File("src/resources/towerDefense_tile245.png"));
+            this.enemy2 = ImageIO.read(new File("src/resources/towerDefense_tile246.png"));
          } catch (IOException ex) {System.out.println("No cargo las imagenes correctamente");}
-    }
-
-    public BufferedImage getGrass1() {
-        return getGrass();
-    }
-    public void setGrass1(BufferedImage grass) {
-        this.setGrass(grass);
-    }
-    public BufferedImage getRoad() {
-        return road;
-    }
-    public void setRoad(BufferedImage road) {
-        this.road = road;
-    }
-    public BufferedImage getEnemy() {
-        return enemy;
-    }
-    public void setEnemy(BufferedImage enemy) {
-        this.enemy = enemy;
-    }
-    public BufferedImage getRock() {
-        return rock;
-    }
-    public void setRock(BufferedImage rock) {
-        this.rock = rock;
-    }
-    public BufferedImage getTower() {
-        return tower;
-    }
-    public void setTower(BufferedImage tower) {
-        this.tower = tower;
     }
 
     /**
@@ -88,31 +63,17 @@ public class Texture implements Serializable {
     }
 
     /**
-     * @return the road1
+     * @return the road
      */
-    public BufferedImage getRoad1() {
-        return road1;
+    public BufferedImage getRoad() {
+        return road;
     }
 
     /**
-     * @param road1 the road1 to set
+     * @param road the road to set
      */
-    public void setRoad1(BufferedImage road1) {
-        this.road1 = road1;
-    }
-
-    /**
-     * @return the road2
-     */
-    public BufferedImage getRoad2() {
-        return road2;
-    }
-
-    /**
-     * @param road2 the road2 to set
-     */
-    public void setRoad2(BufferedImage road2) {
-        this.road2 = road2;
+    public void setRoad(BufferedImage road) {
+        this.road = road;
     }
 
     /**
@@ -198,4 +159,104 @@ public class Texture implements Serializable {
     public void setRoad8(BufferedImage road8) {
         this.road8 = road8;
     }
+
+    /**
+     * @return the enemy1
+     */
+    public BufferedImage getEnemy1() {
+        return enemy1;
+    }
+
+    /**
+     * @param enemy1 the enemy1 to set
+     */
+    public void setEnemy1(BufferedImage enemy1) {
+        this.enemy1 = enemy1;
+    }
+
+    /**
+     * @return the enemy2
+     */
+    public BufferedImage getEnemy2() {
+        return enemy2;
+    }
+
+    /**
+     * @param enemy2 the enemy2 to set
+     */
+    public void setEnemy2(BufferedImage enemy2) {
+        this.enemy2 = enemy2;
+    }
+
+    /**
+     * @return the rock
+     */
+    public BufferedImage getRock() {
+        return rock;
+    }
+
+    /**
+     * @param rock the rock to set
+     */
+    public void setRock(BufferedImage rock) {
+        this.rock = rock;
+    }
+
+    /**
+     * @return the tower1
+     */
+    public BufferedImage getTower1() {
+        return tower1;
+    }
+
+    /**
+     * @param tower1 the tower1 to set
+     */
+    public void setTower1(BufferedImage tower1) {
+        this.tower1 = tower1;
+    }
+
+    /**
+     * @return the tower2
+     */
+    public BufferedImage getTower2() {
+        return tower2;
+    }
+
+    /**
+     * @param tower2 the tower2 to set
+     */
+    public void setTower2(BufferedImage tower2) {
+        this.tower2 = tower2;
+    }
+
+    /**
+     * @return the road9
+     */
+    public BufferedImage getRoad9() {
+        return road9;
+    }
+
+    /**
+     * @param road9 the road9 to set
+     */
+    public void setRoad9(BufferedImage road9) {
+        this.road9 = road9;
+    }
+
+    /**
+     * @return the road10
+     */
+    public BufferedImage getRoad10() {
+        return road10;
+    }
+
+    /**
+     * @param road10 the road10 to set
+     */
+    public void setRoad10(BufferedImage road10) {
+        this.road10 = road10;
+    }
+
+    
 }
