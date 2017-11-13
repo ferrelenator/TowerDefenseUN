@@ -5,43 +5,169 @@
  */
 package ui;
 
+
 import data.Board;
 import data.Enemy;
 import data.Player;
 import data.Tower;
-import com.sun.awt.AWTUtilities;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author Fenryr
  */
-import java.util.ResourceBundle;
-import javax.imageio.ImageIO;
-public class UISwing extends javax.swing.JFrame implements UI {
-
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import ui.UISwing.GameBoard;
+public class UISwing extends JFrame implements UI {
+    
+    private GameBoard myBoard;
+    private Board board;
+    private Player player;
+    private int select;
     /**
      * Creates new form UISwing3
      */
-    public UISwing() {
+    public UISwing(Board board) {
+        this.board=board;
         initComponents();
         //Dimmension(832,640);
         Menu.setVisible(true);
         Game.setVisible(false);
         Pause.setVisible(false);
-        
+        myBoard=new GameBoard(board);
+        panelBoard.add(myBoard);
+        myBoard.setVisible(true);
+        this.revalidate();
+        this.repaint();
+       
         this.pack();
         this.setVisible(true);
+      
     }
 
+    class GameBoard extends JPanel implements Runnable{
+        
+        
+        private int timeLimit=2;
+        private Board board;
+        public Thread thread= new Thread(this);
+        private BufferedImage grass,road,enemy,rock,tower;
+        private Image[][] terrain=new Image[10][10];
+        private Image[][] entity=new Image[10][10];
+        Dimension size=new Dimension(640,640);
+        
+        public GameBoard(Board board){
+            loadImages();
+            this.board=board;
+        setPreferredSize(size);
+        for (int row = 0; row < board.getBoard().length; row++) {
+            for (int col = 0; col < board.getBoard().length; col++) {
+                switch(board.getBoard()[row][col].getValue()){
+                    case 'X':
+                      terrain[row][col]= grass;
+                    break;
+                    case ' ':
+                      terrain[row][col]= road;
+                      break;
+                    default:
+                      terrain[row][col]= grass;
+                      break;}}}
+        
+         board.getTowerList().forEach((t) -> {
+           entity[t.getRow()][t.getCol()]= tower;
+        });
+        board.getEnemyList().forEach((e) -> {
+            entity[e.getRow()][e.getCol()]=enemy;
+        });    
+     
+        }
+
+        public void loadImages(){
+            try {                
+            this.grass = ImageIO.read(new File("src/resources/towerDefense_tile024.png"));
+            this.road = ImageIO.read(new File("src/resources/towerDefense_tile050.png"));
+            this.rock = ImageIO.read(new File("src/resources/towerDefense_tile136.png"));
+            this.tower = ImageIO.read(new File("src/resources/towerDefense_tile206.png"));
+            this.enemy = ImageIO.read(new File("src/resources/towerDefense_tile245.png"));
+         } catch (IOException ex) {}
+        }
+               
+        public void stop() {
+        timeLimit=-1;
+        }
+    
+        public void resume(){
+        timeLimit=2;
+        }
+        @Override
+        public void run() {
+            
+            while(timeLimit>1){
+                try {
+   /*    board.getTowerList().forEach((t) -> {
+           entity[t.getRow()][t.getCol()]= tower;
+        });
+        board.getEnemyList().forEach((e) -> {
+            entity[e.getRow()][e.getCol()]=enemy;
+        });    */
+                    repaint();
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(UISwing.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        @Override
+        protected void paintComponent(Graphics g){
+         super.paintComponent(g);      
+        
+        
+       for (int row = 0; row < board.getBoard().length; row++) {
+                for (int col = 0; col < board.getBoard().length; col++) {
+                 g.drawImage(terrain[col][row],row*64,col*64,this);}}  
+     
+        board.getTowerList().forEach((t) -> {
+            g.drawImage(entity[t.getRow()][t.getCol()],t.getRow()*64,t.getCol()*64,this);
+        });
+        board.getEnemyList().forEach((e) -> {
+           g.drawImage(entity[e.getRow()][e.getCol()],e.getRow()*64,e.getCol()*64,this);
+        });  
+ 
+
+        }
+    }
+     
+    private void pause() {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UISwing.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     @Override
-    public int printTitle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public synchronized int printTitle() {
+         select = -1;
+          while (select  == -1) {
+            pause();
+        }
+       return select;
     }
 
     @Override
@@ -56,17 +182,21 @@ public class UISwing extends javax.swing.JFrame implements UI {
 
     @Override
     public int printMenu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        select = -1;
+          while (select  == -1) {
+            pause();
+        }
+       return select;
     }
 
     @Override
     public String playerName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "Player";
     }
 
     @Override
     public void charge(Board board, Player player, int second) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  
     }
 
     @Override
@@ -116,13 +246,11 @@ public class UISwing extends javax.swing.JFrame implements UI {
 
     @Override
     public void error(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
     @Override
     public void win(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        }
 
     @Override
     public void printBoard(Board board) {
@@ -157,11 +285,15 @@ public class UISwing extends javax.swing.JFrame implements UI {
         Btower2 = new javax.swing.JButton();
         Btower3 = new javax.swing.JButton();
         Bpause = new javax.swing.JButton();
+        panelBoard = new javax.swing.JPanel();
         Pause = new javax.swing.JPanel();
         Lpause = new javax.swing.JLabel();
         Bresume = new javax.swing.JButton();
         Bnew = new javax.swing.JButton();
         Bexit = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -221,7 +353,7 @@ public class UISwing extends javax.swing.JFrame implements UI {
                             .addComponent(Bmenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Bmenu3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Bmenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,8 +368,10 @@ public class UISwing extends javax.swing.JFrame implements UI {
                 .addComponent(Bmenu3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Bmenu4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
+
+        Game.setBackground(new java.awt.Color(153, 255, 153));
 
         Lgold.setText("Oro");
 
@@ -287,54 +421,61 @@ public class UISwing extends javax.swing.JFrame implements UI {
             }
         });
 
+        panelBoard.setBackground(new java.awt.Color(153, 255, 204));
+
         javax.swing.GroupLayout GameLayout = new javax.swing.GroupLayout(Game);
         Game.setLayout(GameLayout);
         GameLayout.setHorizontalGroup(
             GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GameLayout.createSequentialGroup()
-                .addContainerGap(640, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(panelBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GameLayout.createSequentialGroup()
-                        .addComponent(Bwave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(Bnext, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GameLayout.createSequentialGroup()
+                    .addGroup(GameLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44))
-                    .addComponent(Bpause, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GameLayout.createSequentialGroup()
-                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Linfo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(GameLayout.createSequentialGroup()
+                                .addComponent(Bwave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Bnext, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Bpause, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(GameLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62))
-                    .addComponent(Linfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         GameLayout.setVerticalGroup(
             GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GameLayout.createSequentialGroup()
+            .addGroup(GameLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Bwave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Bnext, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Linfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(Bpause, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelBoard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(GameLayout.createSequentialGroup()
+                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Bwave, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Bnext, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Linfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Bpause, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 15, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         Lpause.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -391,6 +532,14 @@ public class UISwing extends javax.swing.JFrame implements UI {
                 .addContainerGap())
         );
 
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -420,6 +569,7 @@ public class UISwing extends javax.swing.JFrame implements UI {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Bmenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu1ActionPerformed
+       select=1;
        Menu.setVisible(false);
        Game.setVisible(true);
     }//GEN-LAST:event_Bmenu1ActionPerformed
@@ -433,8 +583,22 @@ public class UISwing extends javax.swing.JFrame implements UI {
     }//GEN-LAST:event_Bmenu3ActionPerformed
 
     private void Bmenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu4ActionPerformed
-        // TODO add your handling code here:
+    System.exit(0);
     }//GEN-LAST:event_Bmenu4ActionPerformed
+
+    private void BresumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BresumeActionPerformed
+        Pause.setVisible(false);
+    }//GEN-LAST:event_BresumeActionPerformed
+
+    private void BnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BnewActionPerformed
+       Game.setVisible(false);
+       Pause.setVisible(false);
+       Menu.setVisible(true);
+    }//GEN-LAST:event_BnewActionPerformed
+
+    private void BexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_BexitActionPerformed
 
     private void BpauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BpauseActionPerformed
         Pause.setVisible(true);
@@ -459,20 +623,6 @@ public class UISwing extends javax.swing.JFrame implements UI {
     private void BwaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BwaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BwaveActionPerformed
-
-    private void BresumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BresumeActionPerformed
-        Pause.setVisible(false);
-    }//GEN-LAST:event_BresumeActionPerformed
-
-    private void BnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BnewActionPerformed
-       Game.setVisible(false);
-       Pause.setVisible(false);
-       Menu.setVisible(true);
-    }//GEN-LAST:event_BnewActionPerformed
-
-    private void BexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_BexitActionPerformed
 
     
     /**
@@ -509,6 +659,10 @@ public class UISwing extends javax.swing.JFrame implements UI {
     private javax.swing.JLabel Lpause;
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel Pause;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel panelBoard;
     private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 

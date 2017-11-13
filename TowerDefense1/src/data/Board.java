@@ -11,45 +11,9 @@ public class Board{
 
     public Board(){  
     
-        enemyList= new ArrayList();
-        towerList= new ArrayList();
-    
-        int[][] newMap = {
-                  {0,0,0,0,0,2,2,2,2,2},
-                  {0,0,0,0,0,0,2,2,2,2},
-                  {1,1,1,1,0,3,0,2,2,2},
-                  {1,1,1,1,0,3,3,0,2,2},
-                  {0,0,1,1,0,3,3,3,0,2},
-                  {0,0,1,1,0,0,0,0,0,0},
-                  {0,0,1,1,1,1,1,1,1,1},
-                  {0,0,1,1,1,1,1,1,1,1},
-                  {0,0,0,0,0,0,0,0,0,0},
-                  {2,2,2,2,2,2,0,0,0,0}
-                  };
-                
-        board = new Square[newMap.length][newMap.length];
-        char value='X';
-
-        for (int i = 0; i < newMap.length; i++) {
-            for (int j = 0; j < newMap.length; j++) {
-                switch(newMap[i][j]){
-                    case 1:
-                        value=' ';
-                        break;
-                    case 2:
-                        value='~';
-                        break;
-                    case 3:
-                        value='*';
-                        break;
-                    default:
-                        value='X';
-                        break;
-                }
-                Square square = new Square(i, j,value);
-                board[i][j]=square;
-            }
-        }
+        enemyList= new ArrayList<>();
+        towerList= new ArrayList<>();
+        board=new Board[][];
     }
     
     public void newEnemy1(int x,int y) {

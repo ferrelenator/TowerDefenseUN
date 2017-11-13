@@ -17,31 +17,42 @@ no sean numeros
 */
 
 package business;
+import data.Board;
+import data.Player;
+import data.Texture;
 import ui.UI;
 import ui.UIText;
 import ui.UISwing;
+import ui.UITest;
 
 public class Boot  {
     
-    
-    private static Turn turn;
-    private static UI ui;
+    private static Board board;
+    private static Player player;
     private static boolean cycle ;
     
-     private static void selectUI(String[] args) {
+    private static Rule rule;
+    private static Turn turn;
+    private static UI ui;
+    
+    
+   private static void selectUI(String[] args) {
         if (args.length == 0) {
-            ui = new UISwing();
+        //    ui = new UISwing();
+           ui = new UIText(); 
             
         } else if (args[0].equals("text")) {
             ui = new UIText();
         } else {
-            ui = new UISwing();
+      //      ui = new UISwing(new Board());
         }
     }
- 
+
     public static void main(String[] args) {  
-    selectUI(args); 
+   selectUI(args); 
     Star();
+    newGame();
+    
     }
     
     public static void Star(){
@@ -66,10 +77,43 @@ public class Boot  {
         }
     }
     public static void newGame() {
-       
+       board=new Board();
        turn=new Turn(ui); 
-       turn.game();    
+      
+       
+    //   this.ui=new UISwing(board);
+       player = new Player(ui.playerName());
+       rule=new Rule(board,player,ui);
+       
+       turn.run();    
     }
+    
+    public void newMap(){
+        Texture texture;
+        char value;
+        for (int i = 0; i < newMap.length; i++) {
+            for (int j = 0; j < newMap.length; j++) {
+                switch(newMap[i][j]){
+                    case 1:
+                        value=' ';
+                        break;
+                    case 2:
+                        value='~';
+                        break;
+                    case 3:
+                        value='*';
+                        break;
+                    default:
+                        value='X';
+                        break;
+                }
+                Square square = new Square(i, j,value);
+                board[i][j]=square;
+            }
+        }
+    }
+    
+    
 }
     
     

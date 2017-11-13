@@ -6,6 +6,7 @@ package business;
 import data.Board;
 import data.Player;
 import ui.UI;
+import ui.UISwing;
 public class Turn implements Runnable {
      
     private Board board;
@@ -15,41 +16,49 @@ public class Turn implements Runnable {
     private int seconds=2;
     private int counter = 0 ;
     private boolean exit;
+    private int user;
     private UI ui;
 
     
     public Turn(UI ui) {
-       this.ui=ui;
-       this.board=new Board();
-       this.player = new Player(ui.playerName());
-       this.rule=new Rule(board,player,ui);
+ 
+       
+       
     }
     
     public void stop() {
         setTimeLimit(-1);
     }
     
+    public void resume(){
+        setTimeLimit(2);
+    }
+    
     @Override
     public void run() {
+        exit = false;
+        while(timeLimit>1){
+            ui.printBoard(board);
             try { 
+            exitG();
+            if(!exit){
              game();
+            System.out.println("si llega"); 
             Thread.sleep(1000);
-            counter++;                     
+            counter++;         } else{System.out.println("acabo");}          
             } catch (InterruptedException ex) {  }
-        
+        }
     }
     
     public void game() {
-        exit = false;
-        int user ;
-        while (!exit) {
-            exitG();
-            user =ui.printMenu();
-                ui.charge(board, player,counter);
+      
+            user=9;           
+     user =ui.printMenu();
             if(user!=9){
                 switch(user){
                     case 1:
-                        rule.master(counter);     
+                        rule.master(counter);  
+                        ui.charge(board, player,counter);
                         break;
                     case 2:
                         rule.askTower();
@@ -76,8 +85,9 @@ public class Turn implements Runnable {
                         ui.error(0);
                         break;
                 }
-            }else{rule.master(counter);}
-        }
+            }else{rule.master(counter);
+            ui.charge(board, player,counter);}
+        
     }
     
      public void exitG(){
@@ -91,6 +101,11 @@ public class Turn implements Runnable {
         }
     }
     
+    public void newMap(){
+        
+    }
+     
+     
     public int getCounter() {
         return counter;
     }

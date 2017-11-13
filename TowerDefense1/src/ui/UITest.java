@@ -59,33 +59,30 @@ public class UITest extends JFrame implements UI{
     
      
     class Game extends JPanel implements Runnable {
-        public Thread thread= new Thread(this);
-        
+       public Thread thread= new Thread(this);
         private BufferedImage image;
         private Image[] grass=new Image[100];
+        Dimension size=new Dimension(640,640);
         public Game(){
-                ImagePanel();
+        
+         setPreferredSize(size);
+                 try {                
+            this.image = ImageIO.read(new File("src/resources/towerDefense_tile024.png"));
+         } catch (IOException ex) {}
                 for(int i=0;i< 100;i++){
                 grass[i]= image;}
-                thread.start();
+                
+                
                    }
          
 
-    public void ImagePanel() {
-       try {                
-          this.image = ImageIO.read(new File("src/resources/grass.png"));
-       } catch (IOException ex) {}
-    }
-
         @Override
         public void run() {
-        
             repaint();
-        
         }
         @Override
         protected void paintComponent(Graphics g){
-            super.paintComponent(g);
+         super.paintComponent(g);
          g.clearRect(0, 0, 50,50);
          
         for(int i=0;i< 10;i++){
