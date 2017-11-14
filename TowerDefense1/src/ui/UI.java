@@ -5,6 +5,7 @@
  */
 package ui;
 
+import business.Rule;
 import business.Turn;
 import data.Board;
 import data.Enemy;
@@ -34,4 +35,6 @@ public interface UI {
     public void error(int i);
     public void win(int i);
     public void printBoard(Board board);
+
+    public void newGame(Board board, Player player, Rule rule, Turn turn);
 }

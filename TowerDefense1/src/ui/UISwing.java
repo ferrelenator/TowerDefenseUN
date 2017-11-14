@@ -6,30 +6,24 @@
 package ui;
 
 
+import business.Rule;
+import business.Turn;
 import data.Board;
 import data.Enemy;
 import data.Player;
 import data.Tower;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.awt.image.ImageObserver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+
 
 /**
  *
  * @author Fenryr
  */
-import javax.swing.ImageIcon;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,6 +33,8 @@ public class UISwing extends JFrame implements UI {
     private GameBoard myBoard;
     private Board board;
     private Player player;
+    private Rule rule;
+    private Turn turn;
     private int select;
     private boolean charge=false;
     /**
@@ -55,17 +51,28 @@ public class UISwing extends JFrame implements UI {
       
     }
 
-    class GameBoard extends JPanel implements Runnable{
-        
+    @Override
+    public void newGame(Board board, Player player, Rule rule, Turn turn) {
+    this.board=board;
+    this.player=player;
+    this.rule=rule;
+    this.turn=turn;
+    myBoard=new GameBoard();
+    panelBoard.add(myBoard);
+    this.revalidate();
+    this.repaint();
+    myBoard.setVisible(true);
+    }
+
+    class GameBoard extends JPanel implements Runnable,ImageObserver{
         
         private int timeLimit=2;
-        
         public Thread thread= new Thread(this);
         Dimension size=new Dimension(640,640);
         
         public GameBoard(){
         setPreferredSize(size);
-          for (int row = 0; row < board.getBoard().length; row++) {
+      /*    for (int row = 0; row < board.getBoard().length; row++) {
                 for (int col = 0; col < board.getBoard().length; col++) {
                  board.getBoard()[row][col].init(row, col);
             }}
@@ -78,7 +85,7 @@ public class UISwing extends JFrame implements UI {
         });
         board.getEnemyList().forEach((e) -> {
          e.getSquare().init(e.getRow(),e.getCol());
-        }); 
+        }); */
         }
         
         public void stop() {
@@ -91,7 +98,6 @@ public class UISwing extends JFrame implements UI {
         public void run() {
             while(timeLimit>1){
                 try {
-                    reinit();
                     repaint();
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
@@ -99,8 +105,6 @@ public class UISwing extends JFrame implements UI {
                 }
             }
         }
-        
-       
         @Override
         protected void paintComponent(Graphics g){
          super.paintComponent(g);      
@@ -117,7 +121,8 @@ public class UISwing extends JFrame implements UI {
         }); 
         
         }
-}
+
+    }
      
     private void pause() {
         try {
@@ -138,7 +143,7 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void instructions() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -148,7 +153,11 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public int printMenu() {
-       return 1;
+      
+          if (charge) {
+            return select;
+        }else{return select;}
+       
     }
 
     @Override
@@ -216,13 +225,6 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void printBoard(Board board) {
-        this.board=board;    
-        charge =true;
-        myBoard=new GameBoard();
-        panelBoard.add(myBoard);
-        this.revalidate();
-        this.repaint();
-        myBoard.setVisible(true);
     }
     
     
@@ -362,6 +364,11 @@ public class UISwing extends JFrame implements UI {
         });
 
         Btower1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/towerDefense_tile206.png"))); // NOI18N
+        Btower1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btower1MouseClicked(evt);
+            }
+        });
         Btower1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btower1ActionPerformed(evt);
@@ -538,16 +545,18 @@ public class UISwing extends JFrame implements UI {
 
     private void Bmenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu1ActionPerformed
        select=1;
+       repaint();
        Menu.setVisible(false);
        Game.setVisible(true);
+       
     }//GEN-LAST:event_Bmenu1ActionPerformed
 
     private void Bmenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu2ActionPerformed
-        // TODO add your handling code here:
+      select=2;
     }//GEN-LAST:event_Bmenu2ActionPerformed
 
     private void Bmenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu3ActionPerformed
-        // TODO add your handling code here:
+     select=3;
     }//GEN-LAST:event_Bmenu3ActionPerformed
 
     private void Bmenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu4ActionPerformed
@@ -591,6 +600,11 @@ public class UISwing extends JFrame implements UI {
     private void BwaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BwaveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BwaveActionPerformed
+
+    private void Btower1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btower1MouseClicked
+       
+       
+    }//GEN-LAST:event_Btower1MouseClicked
 
     
     /**

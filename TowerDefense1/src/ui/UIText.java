@@ -1,5 +1,7 @@
 package ui;
 
+import business.Rule;
+import business.Turn;
 import java.util.Scanner;
 import data.Board;
 import data.Enemy;
@@ -190,4 +192,8 @@ public class UIText implements UI {
         printBoard="\t   [0|1|2|3|4|5|6|7|8|9]".concat(printBoard);
         System.out.println(printBoard);
     }
+
+    @Override
+    public void newGame(Board board, Player player, Rule rule, Turn turn) {
+        System.out.println("\n ********** Empezaste un Nuevo Juego ************* \n");}
 }

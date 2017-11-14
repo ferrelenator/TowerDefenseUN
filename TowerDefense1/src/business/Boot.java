@@ -25,7 +25,6 @@ import java.awt.image.BufferedImage;
 import ui.UI;
 import ui.UIText;
 import ui.UISwing;
-import ui.UITest;
 
 public class Boot  {
     
@@ -83,6 +82,7 @@ public class Boot  {
        player = new Player(ui.playerName());
        rule=new Rule(board,player,ui);
        turn=new Turn(rule); 
+       ui.newGame(board,player,rule,turn);
        turn.run();    
     }
     

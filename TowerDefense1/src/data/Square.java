@@ -14,18 +14,14 @@ public class Square extends Rectangle{
         this.col = col;
         this.value = value;
         this.texture=texture;
-    }
-    
-    public void init(int x, int y){
-        this.x=y*64;
-        this.y=x*64;
+        this.x=col*64;
+        this.y=row*64;
         this.width=64;
         this.height=64;
-        this.setBounds(y*64, x*64, width,height);
+        this.setBounds(col*64,row*64, width,height);
     }
     
     public void draw(Graphics g,ImageObserver io){
-        g.drawRect(x, y, width,height);
         g.drawImage(texture, x,y, io);
     }
     
