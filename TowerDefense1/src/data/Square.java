@@ -18,7 +18,7 @@ public class Square extends Rectangle{
         this.y=row*64;
         this.width=64;
         this.height=64;
-        this.setBounds(col*64,row*64, width,height);
+     //   this.setBounds(col*64,row*64, width,height);
     }
     
     public void draw(Graphics g,ImageObserver io){
@@ -35,12 +35,14 @@ public class Square extends Rectangle{
     }
     public void setRow(int row) {
         this.row = row;
+        this.y=row*64;
     }
     public int getCol() {
         return col;
     }
     public void setCol(int col) {
         this.col = col;
+        this.x=col*64;
     }
     public char getValue() {
         return value;

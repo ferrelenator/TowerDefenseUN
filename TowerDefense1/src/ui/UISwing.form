@@ -179,6 +179,9 @@
           <Color blue="99" green="ff" red="99" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="GameMouseClicked"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -187,7 +190,15 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="panelBoard" min="-2" pref="674" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="Btower2" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="Btower1" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="Btower3" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="Linfo" min="-2" pref="148" max="-2" attributes="0"/>
@@ -200,13 +211,18 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="Btower2" min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="Btower1" min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="Btower3" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="Lgold" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="Llife" alignment="1" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="Llife" min="-2" pref="64" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="LIconlife" min="-2" pref="64" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="Lgold" min="-2" pref="64" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="LIcongold" min="-2" pref="64" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -231,11 +247,17 @@
                           <Component id="Btower2" min="-2" pref="64" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="Btower3" min="-2" pref="64" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                          <Component id="Lgold" min="-2" pref="64" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="Llife" min="-2" pref="64" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="LIcongold" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="Lgold" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="LIconlife" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="Llife" alignment="3" min="-2" pref="64" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                           <Component id="Linfo" min="-2" pref="64" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="Bpause" min="-2" pref="64" max="-2" attributes="0"/>
@@ -248,12 +270,15 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="Lgold">
+        <Component class="javax.swing.JLabel" name="LIcongold">
           <Properties>
             <Property name="text" type="java.lang.String" value="Oro"/>
           </Properties>
+          <Events>
+            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="LIcongoldInputMethodTextChanged"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="Llife">
+        <Component class="javax.swing.JLabel" name="LIconlife">
           <Properties>
             <Property name="text" type="java.lang.String" value="Vida"/>
           </Properties>
@@ -265,6 +290,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="Bwave">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="oleada"/>
           </Properties>
           <Events>
@@ -273,6 +301,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="Bnext">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="siguiente"/>
           </Properties>
           <Events>
@@ -281,17 +312,24 @@
         </Component>
         <Component class="javax.swing.JButton" name="Btower1">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resources/towerDefense_tile206.png"/>
             </Property>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btower1MouseClicked"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Btower1MousePressed"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Btower1ActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="Btower2">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resources/towerDefense_tile249.png"/>
             </Property>
@@ -302,6 +340,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="Btower3">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="torre3"/>
           </Properties>
           <Events>
@@ -310,11 +351,27 @@
         </Component>
         <Component class="javax.swing.JButton" name="Bpause">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="cc" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Pausa"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BpauseActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Lgold">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Oro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="LgoldInputMethodTextChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="Llife">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Vida"/>
+          </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="panelBoard">
           <Properties>

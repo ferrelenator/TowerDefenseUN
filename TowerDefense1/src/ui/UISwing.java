@@ -14,9 +14,11 @@ import data.Player;
 import data.Tower;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -35,8 +37,8 @@ public class UISwing extends JFrame implements UI {
     private Player player;
     private Rule rule;
     private Turn turn;
-    private int select;
-    private boolean charge=false;
+    private int select,x,y;
+    private boolean think=false,first=false;
     /**
      * Creates new form UISwing3
      */
@@ -50,6 +52,8 @@ public class UISwing extends JFrame implements UI {
         this.setVisible(true);
       
     }
+    
+
 
     @Override
     public void newGame(Board board, Player player, Rule rule, Turn turn) {
@@ -57,16 +61,22 @@ public class UISwing extends JFrame implements UI {
     this.player=player;
     this.rule=rule;
     this.turn=turn;
+    LIcongold.setIcon(new ImageIcon("src/resources/Gold.png"));
+    LIconlife.setIcon(new ImageIcon("src/resources/gem.png"));
+    if(!first){
+        first=true;
     myBoard=new GameBoard();
     panelBoard.add(myBoard);
-    this.revalidate();
-    this.repaint();
     myBoard.setVisible(true);
+    this.revalidate();}
+    this.repaint();
+    
     }
 
     class GameBoard extends JPanel implements Runnable,ImageObserver{
         
         private int timeLimit=2;
+        private MouseEvent mouse;
         public Thread thread= new Thread(this);
         Dimension size=new Dimension(640,640);
         
@@ -153,10 +163,10 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public int printMenu() {
-      
-          if (charge) {
-            return select;
-        }else{return select;}
+      while(think){
+          
+      }
+          return select;
        
     }
 
@@ -167,12 +177,17 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void charge(Board board, Player player, int second) {
-        
+        Lgold.setText(Integer.toString(player.getMoney()));
+        Llife.setText(Integer.toString(player.getLife()));
+        repaint();
     }
 
     @Override
     public int[] placeTower() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while(think){
+        }
+         int[]   ij= new  int[]{y,x};
+        return ij;
     }
 
     @Override
@@ -221,12 +236,12 @@ public class UISwing extends JFrame implements UI {
 
     @Override
     public void win(int i) {
+        
         }
 
     @Override
     public void printBoard(Board board) {
     }
-    
     
     
     
@@ -246,8 +261,8 @@ public class UISwing extends JFrame implements UI {
         Bmenu3 = new javax.swing.JButton();
         Bmenu4 = new javax.swing.JButton();
         Game = new javax.swing.JPanel();
-        Lgold = new javax.swing.JLabel();
-        Llife = new javax.swing.JLabel();
+        LIcongold = new javax.swing.JLabel();
+        LIconlife = new javax.swing.JLabel();
         Linfo = new javax.swing.JLabel();
         Bwave = new javax.swing.JButton();
         Bnext = new javax.swing.JButton();
@@ -255,6 +270,8 @@ public class UISwing extends JFrame implements UI {
         Btower2 = new javax.swing.JButton();
         Btower3 = new javax.swing.JButton();
         Bpause = new javax.swing.JButton();
+        Lgold = new javax.swing.JLabel();
+        Llife = new javax.swing.JLabel();
         panelBoard = new javax.swing.JPanel();
         Pause = new javax.swing.JPanel();
         Lpause = new javax.swing.JLabel();
@@ -342,13 +359,26 @@ public class UISwing extends JFrame implements UI {
         );
 
         Game.setBackground(new java.awt.Color(153, 255, 153));
+        Game.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GameMouseClicked(evt);
+            }
+        });
 
-        Lgold.setText("Oro");
+        LIcongold.setText("Oro");
+        LIcongold.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                LIcongoldInputMethodTextChanged(evt);
+            }
+        });
 
-        Llife.setText("Vida");
+        LIconlife.setText("Vida");
 
         Linfo.setText("Proximos enemigos");
 
+        Bwave.setBackground(new java.awt.Color(204, 255, 204));
         Bwave.setText("oleada");
         Bwave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,6 +386,7 @@ public class UISwing extends JFrame implements UI {
             }
         });
 
+        Bnext.setBackground(new java.awt.Color(204, 255, 204));
         Bnext.setText("siguiente");
         Bnext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -363,10 +394,14 @@ public class UISwing extends JFrame implements UI {
             }
         });
 
+        Btower1.setBackground(new java.awt.Color(204, 255, 204));
         Btower1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/towerDefense_tile206.png"))); // NOI18N
         Btower1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Btower1MouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                Btower1MousePressed(evt);
             }
         });
         Btower1.addActionListener(new java.awt.event.ActionListener() {
@@ -375,6 +410,7 @@ public class UISwing extends JFrame implements UI {
             }
         });
 
+        Btower2.setBackground(new java.awt.Color(204, 255, 204));
         Btower2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/towerDefense_tile249.png"))); // NOI18N
         Btower2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,6 +418,7 @@ public class UISwing extends JFrame implements UI {
             }
         });
 
+        Btower3.setBackground(new java.awt.Color(204, 255, 204));
         Btower3.setText("torre3");
         Btower3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -389,12 +426,24 @@ public class UISwing extends JFrame implements UI {
             }
         });
 
+        Bpause.setBackground(new java.awt.Color(204, 255, 204));
         Bpause.setText("Pausa");
         Bpause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BpauseActionPerformed(evt);
             }
         });
+
+        Lgold.setText("Oro");
+        Lgold.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                LgoldInputMethodTextChanged(evt);
+            }
+        });
+
+        Llife.setText("Vida");
 
         panelBoard.setBackground(new java.awt.Color(153, 255, 204));
 
@@ -407,6 +456,12 @@ public class UISwing extends JFrame implements UI {
                 .addComponent(panelBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(GameLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(GameLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Linfo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,13 +471,16 @@ public class UISwing extends JFrame implements UI {
                                 .addComponent(Bnext, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(Bpause, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(GameLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(18, 18, 18)
                         .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btower1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, GameLayout.createSequentialGroup()
+                                .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LIconlife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(GameLayout.createSequentialGroup()
+                                .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LIcongold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         GameLayout.setVerticalGroup(
@@ -441,11 +499,15 @@ public class UISwing extends JFrame implements UI {
                         .addComponent(Btower2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Btower3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(39, 39, 39)
+                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LIcongold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Lgold, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(GameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(LIconlife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Llife, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1)
                         .addComponent(Linfo, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(Bpause, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -545,10 +607,9 @@ public class UISwing extends JFrame implements UI {
 
     private void Bmenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu1ActionPerformed
        select=1;
-       repaint();
        Menu.setVisible(false);
        Game.setVisible(true);
-       
+       repaint();
     }//GEN-LAST:event_Bmenu1ActionPerformed
 
     private void Bmenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bmenu2ActionPerformed
@@ -564,13 +625,16 @@ public class UISwing extends JFrame implements UI {
     }//GEN-LAST:event_Bmenu4ActionPerformed
 
     private void BresumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BresumeActionPerformed
+        think=false;
         Pause.setVisible(false);
+        Game.setVisible(true);
     }//GEN-LAST:event_BresumeActionPerformed
 
     private void BnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BnewActionPerformed
        Game.setVisible(false);
        Pause.setVisible(false);
        Menu.setVisible(true);
+       select=7;
     }//GEN-LAST:event_BnewActionPerformed
 
     private void BexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexitActionPerformed
@@ -578,6 +642,8 @@ public class UISwing extends JFrame implements UI {
     }//GEN-LAST:event_BexitActionPerformed
 
     private void BpauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BpauseActionPerformed
+        think=true;
+        Game.setVisible(false);
         Pause.setVisible(true);
     }//GEN-LAST:event_BpauseActionPerformed
 
@@ -590,7 +656,7 @@ public class UISwing extends JFrame implements UI {
     }//GEN-LAST:event_Btower2ActionPerformed
 
     private void Btower1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btower1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_Btower1ActionPerformed
 
     private void BnextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BnextActionPerformed
@@ -605,6 +671,26 @@ public class UISwing extends JFrame implements UI {
        
        
     }//GEN-LAST:event_Btower1MouseClicked
+
+    private void Btower1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btower1MousePressed
+             rule.askTower();
+             think=true;
+    }//GEN-LAST:event_Btower1MousePressed
+
+    private void GameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GameMouseClicked
+         if(think){
+             y=evt.getX();x=evt.getY();
+         }
+      
+    }//GEN-LAST:event_GameMouseClicked
+
+    private void LIcongoldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_LIcongoldInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LIcongoldInputMethodTextChanged
+
+    private void LgoldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_LgoldInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LgoldInputMethodTextChanged
 
     
     /**
@@ -635,6 +721,8 @@ public class UISwing extends JFrame implements UI {
     private javax.swing.JButton Btower3;
     private javax.swing.JButton Bwave;
     private javax.swing.JPanel Game;
+    private javax.swing.JLabel LIcongold;
+    private javax.swing.JLabel LIconlife;
     private javax.swing.JLabel Lgold;
     private javax.swing.JLabel Linfo;
     private javax.swing.JLabel Llife;

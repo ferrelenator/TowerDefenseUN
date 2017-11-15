@@ -24,7 +24,7 @@ public class Turn implements Runnable {
         this.ui=rule.getUi();
     }
     
-    public void stop() {
+    public void pause() {
         setTimeLimit(-1);
     }
     
@@ -34,18 +34,19 @@ public class Turn implements Runnable {
     
     @Override
     public void run() {
-        exit = false;
+        setExit(false);
         ui.printBoard(board);
+        while(!isExit()){
         while(timeLimit>1){
             exitG();
-            if(!exit){
+            if(!isExit()){
              game();
              ui.charge(board, player,counter);
             try{
             Thread.sleep(1000);
             counter++; } catch (InterruptedException ex) {  }
             } else{}          
-            
+        }
         }
     }
     
@@ -70,7 +71,7 @@ public class Turn implements Runnable {
                         ui.infoEnemy(board);
                         break;    
                     case 7:
-                        exit=true;
+                        setExit(true);
                         break;  
                     case 8:
                         System.exit(0);
@@ -83,11 +84,11 @@ public class Turn implements Runnable {
     
      public void exitG(){
         if(rule.getWave()==rule.getWaveMax() && board.getEnemyList().isEmpty()){
-            exit=true;
+            setExit(true);
             ui.win(0);
         }
         if(player.getLife()<= 0){
-            exit=true;
+            setExit(true);
             ui.win(1);
         }
     }
@@ -104,6 +105,13 @@ public class Turn implements Runnable {
     }
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 }
     
