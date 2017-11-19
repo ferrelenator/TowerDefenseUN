@@ -1,6 +1,6 @@
 package ui;
 
-import business.Rule;
+
 import business.Turn;
 import java.util.Scanner;
 import data.Board;
@@ -12,7 +12,7 @@ public class UIText implements UI {
     
     private static Scanner readerMenu = new Scanner(System.in);
 
-    public  int printTitle() {
+    public int printTitle() {
         System.out.println("[---   Tower Defense     ---]");
         System.out.println("|     Menu principal:       |");
         System.out.println("|     1.Nueva Partida.      |");     
@@ -154,16 +154,13 @@ public class UIText implements UI {
         }
     }
     
-    public  void win(int i){
-        switch(i){
-            case 0:
-                System.out.println("\n ********** Ganaste ************* \n");
-                break;
-            case 1:
-                System.out.println("\n ********** Perdiste ************* \n");
-                break;   
+    public  void win(){
+        System.out.println("\n ********** Ganaste ************* \n");
         }
-    }
+    public  void loose(){
+        System.out.println("\n ********** Perdiste ************* \n");
+        }
+   
 
     public  void printBoard(Board board) {
         
@@ -194,6 +191,14 @@ public class UIText implements UI {
     }
 
     @Override
-    public void newGame(Board board, Player player, Rule rule, Turn turn) {
+    public void newGame(Board board, Player player,Turn turn) {
         System.out.println("\n ********** Empezaste un Nuevo Juego ************* \n");}
+
+    @Override
+    public int Typetower() {
+        System.out.println("Que tipo de torre");
+        System.out.println("1. O");
+        System.out.println("2. %");
+        return readerMenu.nextInt();
+                }
 }

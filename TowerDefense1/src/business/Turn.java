@@ -72,6 +72,7 @@ public class Turn implements Runnable {
                         break;    
                     case 7:
                         setExit(true);
+                        pause();
                         break;  
                     case 8:
                         System.exit(0);
@@ -85,11 +86,13 @@ public class Turn implements Runnable {
      public void exitG(){
         if(rule.getWave()==rule.getWaveMax() && board.getEnemyList().isEmpty()){
             setExit(true);
-            ui.win(0);
+            pause();
+            ui.win();
         }
         if(player.getLife()<= 0){
             setExit(true);
-            ui.win(1);
+            pause();
+            ui.loose();
         }
     }
     

@@ -5,23 +5,14 @@
  */
 package data;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import ui.UISwing;
 
-/**
- *
- * @author Fenryr
- */
 public class Texture implements Serializable {
     
     private BufferedImage grass,road,road3,road4,road5,road6,road7,road8,enemy1,enemy2,rock,tower1,tower2,road9,road10;
@@ -43,8 +34,8 @@ public class Texture implements Serializable {
             this.rock = ImageIO.read(new File("src/resources/towerDefense_tile136.png"));
             this.tower1 = ImageIO.read(new File("src/resources/towerDefense_tile206.png"));
             this.tower2 = ImageIO.read(new File("src/resources/towerDefense_tile249.png"));
-            this.enemy1 = ImageIO.read(new File("src/resources/towerDefense_tile245.png"));
-            this.enemy2 = ImageIO.read(new File("src/resources/towerDefense_tile246.png"));
+            this.enemy1 = ImageIO.read(new File("src/resources/towerDefense_tile271.png"));
+            this.enemy2 = ImageIO.read(new File("src/resources/towerDefense_tile270.png"));
          } catch (IOException ex) {System.out.println("No cargo las imagenes correctamente");}
     }
 

@@ -36,12 +36,12 @@ public class Board{
     
     public void newTower1(Player player,int x,int y) {
         player.setMoney(player.getMoney()-100);
-        towerList.add(new Tower(x,y,10,100,1,texture.getTower1()));  
+        towerList.add(new Tower(x,y,'O',10,100,1,texture.getTower1()));  
     }
     
     public void newTower2(Player player,int x,int y) {
         player.setMoney(player.getMoney()-150);
-        towerList.add(new Tower(x,y,5,150,2,texture.getTower2()));  
+        towerList.add(new Tower(x,y,'%',5,150,2,texture.getTower2()));  
     }
     
     public void killEnemy(Player player,int i) {

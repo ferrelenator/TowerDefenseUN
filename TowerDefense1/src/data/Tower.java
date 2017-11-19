@@ -14,13 +14,12 @@ public class Tower {
     private Square square;
     private int damage,range,price,sell;
     
-    public Tower(int row,int col,int damage,int price,int range,BufferedImage image) {
-        this.square=new Square(row,col,'O',image);
+    public Tower(int row,int col,char value,int damage,int price,int range,BufferedImage image) {
+        this.square=new Square(row,col,value,image);
         this.damage=damage;
         this.price=price;
         this.range=range;
         this.sell= price/2;
-        
     }
     
     

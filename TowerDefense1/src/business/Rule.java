@@ -110,6 +110,9 @@ public class Rule {
     public void askTower(){
         boolean cont=true,cont2;
         if(getPlayer().getMoney()>=100){
+            
+            
+            
             while(cont){
                 cont2=true;
                 int[] i =getUi().placeTower();
@@ -120,7 +123,14 @@ public class Rule {
                 }
                 if(cont2){
                     if(getBoard().getBoard()[i[0]][i[1]].getValue()=='X'){
+                        int type=ui.Typetower();
+                        switch(type){
+                            case 1:
                         getBoard().newTower1(getPlayer(), i[0], i[1]);
+                        break;
+                            case 2:
+                        getBoard().newTower2(getPlayer(), i[0], i[1]);
+                        break;}
                         cont=false;}else{getUi().error(1);}
                 }
             }
@@ -128,6 +138,7 @@ public class Rule {
     }
     
     public void removeEnemy(){
+        try{
         for(int j =0; j < getBoard().getEnemyList().size() ; j++){
             if((getBoard().getEnemyList().get(j).getRow() == 6 && getBoard().getEnemyList().get(j).getCol()== 9) ||
                  (getBoard().getEnemyList().get(j).getRow() == 7 && getBoard().getEnemyList().get(j).getCol()== 9)   ){
@@ -137,7 +148,7 @@ public class Rule {
                 getUi().moneyEnemy(getBoard().getEnemyList().get(j));
                 getBoard().killEnemy(getPlayer(), j);
             }
-        }
+        }}catch(IndexOutOfBoundsException ex){}
     }
     public void removeTower(){
          int i = getUi().selectTower(getBoard());
