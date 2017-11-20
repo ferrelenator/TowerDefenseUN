@@ -8,8 +8,6 @@ TO DO:
 - Pausar el tiempo o adelantarlo
 - Cuadrar los metodos de UIText por si el usuario ingresa letras o otras cosas que 
 no sean numeros
-- Actualizar los diagramas de actividades, de clase, los Mockups 
-- PONGAN SUS NOMBRES EN LA PARTE DE CREDITOS(YO NO SE LOS PONGO)
 */
 
 package business;
