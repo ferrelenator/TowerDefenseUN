@@ -36,9 +36,9 @@ public class UIText implements UI {
     }
     public void credits(){
         System.out.println("        Tower Defense fue desarrollado por     ");
-        System.out.println("        -Nombre");
-        System.out.println("        -Nombre");
-        System.out.println("        -Nombre");
+        System.out.println("        -Mario Vargas");
+        System.out.println("        -Damian Gonzales");
+        System.out.println("        -Brayan Portela");
         System.out.println("        -Daniel Aguirre Calvo");
         System.out.println("\n\n");
     }
