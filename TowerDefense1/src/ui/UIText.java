@@ -21,6 +21,7 @@ public class UIText implements UI {
         System.out.println("|     4.Salir del juego.    |");
         System.out.println("-----------------------------\n");
         System.out.println("Seleccione una Opcion: ");
+        while (!readerMenu.hasNextInt()) readerMenu.next();
         return readerMenu.nextInt();
     }
     public void instructions(){
@@ -82,8 +83,10 @@ public class UIText implements UI {
         int[] i = new int[2];
         System.out.println("Seleccione las coordeanadas para la nueva torre ");
         System.out.println("Seleccione la fila : ");
+        while (!readerMenu.hasNextInt()) readerMenu.next();
         i[0]=readerMenu.nextInt();
         System.out.println("Seleccione la Columna : ");
+        while (!readerMenu.hasNextInt()) readerMenu.next();
         i[1]=readerMenu.nextInt();
         return i;
     }
@@ -104,8 +107,9 @@ public class UIText implements UI {
                 System.out.println("Indice "+board.getTowerList().indexOf(t)+" de la torre "+t.getValue()+" ( "+t.getRow()
                      +","+t.getCol()+" ) : \n");
         });
-          
-        return readerMenu.nextInt();
+        while (!readerMenu.hasNextInt()) readerMenu.next();
+        int a = readerMenu.nextInt();
+        return a;
     }
     
     public  void moneyTower(Tower tower, int i){
@@ -199,6 +203,8 @@ public class UIText implements UI {
         System.out.println("Que tipo de torre");
         System.out.println("1. O");
         System.out.println("2. %");
-        return readerMenu.nextInt();
+                while (!readerMenu.hasNextInt()) readerMenu.next();
+        int a = readerMenu.nextInt();
+        return a;
                 }
 }
